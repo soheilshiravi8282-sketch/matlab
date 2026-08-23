@@ -1,3 +1,9 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>کارگاه مینا سرا</title>
 <style id="msrStyles">
 @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@500;700&family=Vazirmatn:wght@400;500;600;700;800&display=swap');
 
@@ -36,7 +42,6 @@
   letter-spacing:0.2px;
 }
 
-/* ---------- glaze backdrop ---------- */
 .msr-glaze{
   position:fixed;
   inset:0;
@@ -46,7 +51,7 @@
     radial-gradient(600px 500px at var(--mx) var(--my), rgba(156,107,240,0.35), transparent 60%),
     radial-gradient(800px 600px at 15% 15%, rgba(34,184,174,0.28), transparent 55%),
     radial-gradient(700px 700px at 85% 20%, rgba(74,95,209,0.30), transparent 55%),
-    radial-gradient(900px 800px at 50% 100%, rgba(205,161,58,0.14), transparent 60%),
+    radial-gradient(900px 900px at 50% 100%, rgba(205,161,58,0.14), transparent 60%),
     linear-gradient(160deg,var(--bg) 0%,var(--bg2) 100%);
   transition:background-position 0.2s ease-out;
 }
@@ -72,12 +77,6 @@
   66%{transform:translate(-16px,14px) scale(0.96);}
 }
 
-@media (prefers-reduced-motion:reduce){
-  .msr-blob{animation:none;}
-  .msr-root *{animation-duration:0.001ms !important;transition-duration:0.001ms !important;}
-}
-
-/* ---------- layout shell ---------- */
 .msr-nav{
   position:sticky;top:0;z-index:40;
   display:flex;align-items:center;justify-content:space-between;
@@ -107,7 +106,6 @@
   display:flex;align-items:center;justify-content:center;
 }
 .msr-admin-btn.on{background:var(--gold);color:var(--ink);border-color:var(--gold);}
-
 .msr-menu-toggle{display:none;background:none;border:1px solid var(--glass-border);color:var(--ivory);width:38px;height:38px;border-radius:10px;cursor:pointer;font-size:18px;}
 
 .msr-main{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 5vw 90px;}
@@ -115,11 +113,7 @@
 .msr-page.active{display:block;}
 @keyframes msrFade{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
 
-/* ---------- hero ---------- */
-.msr-hero{
-  display:grid;grid-template-columns:1.15fr 0.85fr;gap:48px;align-items:center;
-  padding:72px 0 56px;
-}
+.msr-hero{display:grid;grid-template-columns:1.15fr 0.85fr;gap:48px;align-items:center;padding:72px 0 56px;}
 .msr-eyebrow{
   display:inline-flex;align-items:center;gap:8px;
   font-size:0.8rem;letter-spacing:1.5px;color:var(--turquoise);
@@ -141,16 +135,13 @@
 
 .msr-hero-medallion{
   position:relative;width:min(360px,80vw);aspect-ratio:1;margin:0 auto;
-  border-radius:50%;
-  border:1px solid var(--glass-border);
-  background:var(--glass);
+  border-radius:50%;border:1px solid var(--glass-border);background:var(--glass);
   display:flex;align-items:center;justify-content:center;
 }
 .msr-hero-medallion::before{
   content:'';position:absolute;inset:-14px;border-radius:50%;
   background:conic-gradient(from 0deg,var(--turquoise),var(--violet),var(--blue),var(--gold),var(--turquoise));
-  opacity:0.5;filter:blur(18px);z-index:-1;
-  animation:msrSpin 16s linear infinite;
+  opacity:0.5;filter:blur(18px);z-index:-1;animation:msrSpin 16s linear infinite;
 }
 @keyframes msrSpin{to{transform:rotate(360deg);}}
 
@@ -158,12 +149,10 @@
 .msr-stat b{display:block;font-family:'Noto Naskh Arabic',serif;font-size:1.6rem;color:var(--gold);}
 .msr-stat span{font-size:0.82rem;color:rgba(243,234,217,0.65);}
 
-/* ---------- sections ---------- */
 .msr-section-head{margin:64px 0 30px;}
 .msr-section-head h2{font-size:clamp(1.5rem,2.6vw,2.1rem);margin:0 0 8px;}
 .msr-section-head p{color:rgba(243,234,217,0.65);max-width:60ch;}
 
-/* medallion (rotatable image frame) */
 .msr-medallion{
   position:relative;border-radius:50%;overflow:hidden;
   border:1px solid var(--glass-border);
@@ -172,8 +161,7 @@
 }
 .msr-medallion img{
   width:100%;height:100%;object-fit:cover;position:absolute;inset:0;
-  transform:rotate(var(--rot,0deg));
-  transform-origin:50% 50%;
+  transform:rotate(var(--rot,0deg));transform-origin:50% 50%;
   cursor:grab;user-select:none;-webkit-user-drag:none;
 }
 .msr-medallion:active img{cursor:grabbing;}
@@ -184,13 +172,11 @@
 }
 .msr-medallion:hover .msr-rot-hint{opacity:0.85;}
 
-/* products grid */
 .msr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:26px;}
 .msr-card{
   background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius);
   padding:20px;display:flex;flex-direction:column;align-items:center;text-align:center;
-  transition:transform .25s,border-color .25s;
-  opacity:0;transform:translateY(18px);
+  transition:transform .25s,border-color .25s;opacity:0;transform:translateY(18px);
 }
 .msr-card.in-view{opacity:1;transform:none;}
 .msr-card:hover{transform:translateY(-6px);border-color:rgba(205,161,58,0.5);}
@@ -211,7 +197,6 @@
 .msr-add-card:hover{color:var(--ivory);border-color:var(--gold);}
 .msr-add-card span{font-size:1.8rem;}
 
-/* editable */
 [contenteditable="true"]{outline:1px dashed rgba(205,161,58,0.55);border-radius:6px;padding:1px 4px;}
 [contenteditable="true"]:focus{outline:1px solid var(--gold);background:rgba(205,161,58,0.08);}
 
@@ -230,7 +215,6 @@
 .msr-medallion:hover .msr-upload-label{opacity:1;}
 .msr-upload-label input{display:none;}
 
-/* about page */
 .msr-about{display:grid;grid-template-columns:0.8fr 1.2fr;gap:48px;align-items:start;padding:20px 0;}
 .msr-about .msr-medallion{width:260px;height:260px;margin:0 auto;}
 .msr-about-name{font-size:1.6rem;margin:18px 0 2px;text-align:center;}
@@ -241,7 +225,6 @@
 .msr-fact b{display:block;color:var(--gold);font-family:'Noto Naskh Arabic',serif;font-size:1.2rem;}
 .msr-fact span{font-size:0.78rem;color:rgba(243,234,217,0.6);}
 
-/* contact page */
 .msr-contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;padding:10px 0 40px;}
 .msr-contact-card{
   background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius);
@@ -253,7 +236,6 @@
 .msr-contact-card a{color:var(--ivory);text-decoration:none;border-bottom:1px dotted rgba(243,234,217,0.4);}
 .msr-contact-card a:hover{color:var(--gold);}
 
-/* admin login modal */
 .msr-modal-backdrop{
   position:fixed;inset:0;background:rgba(9,5,14,0.72);backdrop-filter:blur(4px);
   z-index:100;display:none;align-items:center;justify-content:center;padding:20px;
@@ -274,7 +256,6 @@
 .msr-modal-actions .msr-btn{flex:1;}
 .msr-modal-err{color:#e08297;font-size:0.8rem;min-height:1.2em;margin:-6px 0 8px;}
 
-/* toast */
 .msr-toast{
   position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
   background:var(--gold);color:var(--ink);padding:10px 22px;border-radius:999px;
@@ -288,7 +269,6 @@
   color:rgba(243,234,217,0.45);font-size:0.8rem;border-top:1px solid var(--glass-border);
 }
 
-/* responsive */
 @media (max-width:860px){
   .msr-hero{grid-template-columns:1fr;text-align:center;padding-top:44px;}
   .msr-hero p{margin-inline:auto;}
@@ -306,9 +286,10 @@
   .msr-link{width:100%;text-align:center;}
 }
 </style>
+</head>
 
+<body>
 <div class="msr-root" id="msrRoot" dir="rtl" lang="fa">
-  <script type="application/json" id="msrSeedData">{}</script>
   <div class="msr-glaze" id="msrGlaze"></div>
   <div class="msr-blob b1" data-blob></div>
   <div class="msr-blob b2" data-blob></div>
@@ -325,13 +306,11 @@
       <button class="msr-link" data-nav="products">محصولات</button>
       <button class="msr-link" data-nav="about">درباره فروشنده</button>
       <button class="msr-link" data-nav="contact">تماس</button>
-      <button class="msr-admin-btn" id="msrPublishBtn" title="انتشار سایت" style="display:none;">🌐</button>
       <button class="msr-admin-btn" id="msrAdminBtn" title="ورود مدیر">⚙</button>
     </div>
   </nav>
 
   <main class="msr-main">
-
     <!-- HOME -->
     <section class="msr-page" data-page="home">
       <div class="msr-hero">
@@ -403,7 +382,6 @@
         </div>
       </div>
     </section>
-
   </main>
 
   <footer class="msr-footer">
@@ -424,34 +402,31 @@
   </div>
 
   <div class="msr-toast" id="msrToast"></div>
-
-  <div class="msr-modal-backdrop" id="msrPublishBackdrop">
-    <div class="msr-modal" style="max-width:400px;text-align:right;">
-      <h3 style="text-align:center;">انتشار سایت</h3>
-      <p style="text-align:center;">این نسخه فقط داخل Claude ذخیره می‌شود. برای اینکه همه — بدون نیاز به Claude — همین محتوای الان را ببینند، یک فایل مستقل دانلود کنید و آن را هرجا (مثلاً یک هاست رایگان) آپلود کنید.</p>
-      <button class="msr-btn primary" id="msrExportStaticBtn" style="width:100%;margin-bottom:10px;">⬇ دانلود نسخه‌ی عمومی (HTML مستقل)</button>
-      <p style="font-size:0.75rem;opacity:0.7;margin:-4px 0 16px;">توجه: در نسخه‌ی منتشرشده، ویرایش‌های بعدی فقط روی گوشی/مرورگر شما ذخیره می‌شوند و برای بازدیدکننده‌های دیگر دیده نمی‌شوند — چون بک‌اند واقعی ندارد. برای تغییر محتوای عمومی، دوباره اینجا (داخل Claude) ویرایش کنید و همین فایل را از نو دانلود و جایگزین کنید.</p>
-      <div style="display:flex;gap:10px;">
-        <button class="msr-btn ghost" id="msrExportJsonBtn" style="flex:1;">دانلود پشتیبان (JSON)</button>
-        <label class="msr-btn ghost" style="flex:1;text-align:center;cursor:pointer;">
-          بارگذاری پشتیبان
-          <input type="file" accept="application/json" id="msrImportJsonInput" style="display:none;">
-        </label>
-      </div>
-      <button class="msr-btn ghost" id="msrPublishCloseBtn" style="width:100%;margin-top:14px;">بستن</button>
-    </div>
-  </div>
 </div>
 
-<script id="msrScript">
-(function(){
-  const STORE_KEY = "minasara-shop-v1";
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+  import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBzYxh5QPlViwv4M0fSJGf2uALdtBXm5CU",
+    authDomain: "minakari-4392b.firebaseapp.com",
+    databaseURL: "https://minakari-4392b-default-rtdb.firebaseio.com",
+    projectId: "minakari-4392b",
+    storageBucket: "minakari-4392b.firebasestorage.app",
+    messagingSenderId: "833708259975",
+    appId: "1:833708259975:web:526f040d4086aa6f785622",
+    measurementId: "G-W1LZTTCFTS"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
   const ADMIN_PIN = "1234";
   let isAdmin = false;
   let data = null;
   const root = document.getElementById('msrRoot');
 
-  /* ---------- placeholder art ---------- */
   function makePlaceholder(hueA,hueB,seed){
     const c = document.createElement('canvas');
     c.width = 400; c.height = 400;
@@ -462,7 +437,6 @@
     g.addColorStop(1, `hsl(${hueB} 75% 35%)`);
     ctx.fillStyle = g;
     ctx.fillRect(0,0,400,400);
-    // swirl marks to suggest enamel glaze
     for(let i=0;i<6;i++){
       const rx = 60 + ((seed*13+i*47) % 280);
       const ry = 60 + ((seed*29+i*61) % 280);
@@ -508,15 +482,14 @@
   }
 
   function ensureImages(d){
+    if(!d.seller) d.seller = {};
+    if(!d.products) d.products = [];
     if(!d.seller.avatar) d.seller.avatar = makePlaceholder(280,200,3);
     if(!d.seller.heroImage) d.seller.heroImage = makePlaceholder(190,320,7);
     d.products.forEach((p,i)=>{ if(!p.image) p.image = makePlaceholder(p.hueA||200,p.hueB||300,i+1); });
     return d;
   }
 
-  function getPath(obj,path){
-    return path.split('.').reduce((o,k)=>(o?o[k]:undefined),obj);
-  }
   function setPath(obj,path,val){
     const parts = path.split('.');
     let o = obj;
@@ -524,59 +497,30 @@
     o[parts[parts.length-1]] = val;
   }
 
-  const STORAGE_OK = (typeof window.storage !== 'undefined' && window.storage && typeof window.storage.set === 'function');
-
-  let saveTimer=null;
-  async function saveNow(){
-    if(!STORAGE_OK){
-      toast('⚠ این نسخه ذخیره‌سازی ندارد — داخل Claude بازش کنید');
-      return;
-    }
-    try{
-      const payload = JSON.stringify(data);
-      if(payload.length > 4700000){
-        toast('⚠ حجم عکس‌ها زیاد است، یکی را کوچک‌تر کنید');
-        return;
-      }
-      await window.storage.set(STORE_KEY, payload, true);
-      toast('ذخیره شد');
-    }catch(e){
-      console.error('save failed', e);
-      toast('⚠ ذخیره نشد: ' + (e && e.message ? e.message : 'خطای نامشخص'));
-    }
-  }
-  function scheduleSave(){
+  let saveTimer = null;
+  function saveToFirebase(){
     clearTimeout(saveTimer);
-    saveTimer = setTimeout(saveNow, 400);
+    saveTimer = setTimeout(() => {
+      set(ref(db, 'storeData'), data)
+        .then(() => toast('ذخیره شد در دیتابیس'))
+        .catch(err => toast('خطا در ذخیره: ' + err.message));
+    }, 400);
   }
 
-  async function loadData(){
-    let seed = null;
-    try{ seed = JSON.parse(document.getElementById('msrSeedData').textContent || '{}'); }catch(e){}
-    const hasSeed = seed && Array.isArray(seed.products) && seed.products.length>0;
-
-    if(!STORAGE_OK){
-      if(hasSeed){
-        data = ensureImages(seed); // published/static copy — show the baked-in real content, no warning needed
-      }else{
+  function listenToFirebase(){
+    const dataRef = ref(db, 'storeData');
+    onValue(dataRef, (snapshot) => {
+      const val = snapshot.val();
+      if(val){
+        data = ensureImages(val);
+      } else {
         data = ensureImages(defaultData());
-        toast('⚠ حالت پیش‌نمایش: تغییرات ذخیره نمی‌شوند (داخل Claude بازش کنید)');
+        saveToFirebase();
       }
-      return;
-    }
-    try{
-      const res = await window.storage.get(STORE_KEY, true);
-      if(res && res.value){
-        data = JSON.parse(res.value);
-        data = ensureImages(data);
-        return;
-      }
-    }catch(e){ /* not found or error -> fall back below */ }
-    data = ensureImages(hasSeed ? seed : defaultData());
-    scheduleSave();
+      renderAll();
+    });
   }
 
-  /* ---------- toast ---------- */
   let toastTimer=null;
   function toast(msg){
     const el = document.getElementById('msrToast');
@@ -586,15 +530,13 @@
     toastTimer = setTimeout(()=>el.classList.remove('show'), 1800);
   }
 
-  /* ---------- rendering ---------- */
   function renderAll(){
-    document.getElementById('msrShopName').textContent = data.seller.shopName;
-    document.getElementById('msrFooterShop').textContent = data.seller.shopName;
-    document.getElementById('msrHeroImg').src = data.seller.heroImage;
+    if(!data) return;
+    document.getElementById('msrShopName').textContent = data.seller.shopName || '';
+    document.getElementById('msrFooterShop').textContent = data.seller.shopName || '';
+    document.getElementById('msrHeroImg').src = data.seller.heroImage || '';
 
-    const stats = document.getElementById('msrStats');
-    stats.innerHTML = statTemplate();
-
+    document.getElementById('msrStats').innerHTML = statTemplate();
     renderProducts();
     renderAbout();
     renderContact();
@@ -602,23 +544,21 @@
     observeCards();
   }
 
-  /* ---------- shared stat templates (kept in sync between home + about pages) ---------- */
   function statTemplate(){
     return `
-      <div class="msr-stat"><b contenteditable="false" data-field="seller.years">${data.seller.years}</b><span>سال تجربه</span></div>
-      <div class="msr-stat"><b contenteditable="false" data-field="seller.pieces">${data.seller.pieces}</b><span>قطعه ساخته‌شده</span></div>
-      <div class="msr-stat"><b contenteditable="false" data-field="seller.students">${data.seller.students}</b><span>هنرجوی آموزش‌دیده</span></div>
+      <div class="msr-stat"><b contenteditable="false" data-field="seller.years">${data.seller.years||''}</b><span>سال تجربه</span></div>
+      <div class="msr-stat"><b contenteditable="false" data-field="seller.pieces">${data.seller.pieces||''}</b><span>قطعه ساخته‌شده</span></div>
+      <div class="msr-stat"><b contenteditable="false" data-field="seller.students">${data.seller.students||''}</b><span>هنرجوی آموزش‌دیده</span></div>
     `;
   }
   function factTemplate(){
     return `
-      <div class="msr-fact"><b contenteditable="false" data-field="seller.years">${data.seller.years}</b><span>سال سابقه</span></div>
-      <div class="msr-fact"><b contenteditable="false" data-field="seller.pieces">${data.seller.pieces}</b><span>اثر تولید شده</span></div>
-      <div class="msr-fact"><b contenteditable="false" data-field="seller.students">${data.seller.students}</b><span>هنرجو</span></div>
+      <div class="msr-fact"><b contenteditable="false" data-field="seller.years">${data.seller.years||''}</b><span>سال سابقه</span></div>
+      <div class="msr-fact"><b contenteditable="false" data-field="seller.pieces">${data.seller.pieces||''}</b><span>اثر تولید شده</span></div>
+      <div class="msr-fact"><b contenteditable="false" data-field="seller.students">${data.seller.students||''}</b><span>هنرجو</span></div>
     `;
   }
-  // Both the home hero and the about page show years/pieces/students —
-  // editing either copy needs to update both, since they read the same fields.
+
   function syncStatDisplays(){
     document.getElementById('msrStats').innerHTML = statTemplate();
     document.getElementById('msrFactRow').innerHTML = factTemplate();
@@ -628,7 +568,7 @@
   function renderProducts(){
     const grid = document.getElementById('msrProductGrid');
     grid.innerHTML = '';
-    data.products.forEach(p=>{
+    (data.products || []).forEach(p=>{
       const card = document.createElement('div');
       card.className = 'msr-card';
       card.innerHTML = `
@@ -639,11 +579,11 @@
             <input type="file" accept="image/*" data-upload-product="${p.id}">
           </label>
         </div>
-        <span class="msr-tag">${p.tag}</span>
-        <h3 contenteditable="false" data-field="product.${p.id}.name">${p.name}</h3>
-        <div class="msr-price" contenteditable="false" data-field="product.${p.id}.price">${p.price}</div>
+        <span class="msr-tag">${p.tag||''}</span>
+        <h3 contenteditable="false" data-field="product.${p.id}.name">${p.name||''}</h3>
+        <div class="msr-price" contenteditable="false" data-field="product.${p.id}.price">${p.price||''}</div>
         <div class="msr-size-row"><span class="msr-size-label">سایز:</span><span class="msr-size" contenteditable="false" data-field="product.${p.id}.size">${p.size||''}</span></div>
-        <div class="msr-desc" contenteditable="false" data-field="product.${p.id}.desc">${p.desc}</div>
+        <div class="msr-desc" contenteditable="false" data-field="product.${p.id}.desc">${p.desc||''}</div>
         <div class="msr-edit-tools" style="display:none;">
           <button class="msr-icon-btn danger" data-remove-product="${p.id}" title="حذف">🗑</button>
         </div>
@@ -661,30 +601,27 @@
   }
 
   function renderAbout(){
-    document.getElementById('msrAboutImg').src = data.seller.avatar;
-    document.getElementById('msrSellerName').textContent = data.seller.name;
-    document.getElementById('msrSellerTitle').textContent = data.seller.title;
-    document.getElementById('msrBio').textContent = data.seller.bio;
-    const facts = document.getElementById('msrFactRow');
-    facts.innerHTML = factTemplate();
+    document.getElementById('msrAboutImg').src = data.seller.avatar || '';
+    document.getElementById('msrSellerName').textContent = data.seller.name || '';
+    document.getElementById('msrSellerTitle').textContent = data.seller.title || '';
+    document.getElementById('msrBio').textContent = data.seller.bio || '';
+    document.getElementById('msrFactRow').innerHTML = factTemplate();
   }
 
   function renderContact(){
     const phone = document.getElementById('msrPhoneLink');
-    phone.textContent = data.seller.phone;
-    phone.href = 'tel:' + data.seller.phone.replace(/[^\d+]/g,'');
+    phone.textContent = data.seller.phone || '';
+    phone.href = 'tel:' + (data.seller.phone ? data.seller.phone.replace(/[^\d+]/g,'') : '');
     const email = document.getElementById('msrEmailLink');
-    email.textContent = data.seller.email;
-    email.href = 'mailto:' + data.seller.email;
-    document.getElementById('msrInsta').textContent = data.seller.instagram;
-    document.getElementById('msrAddress').textContent = data.seller.address;
-    document.getElementById('msrHours').textContent = data.seller.hours;
+    email.textContent = data.seller.email || '';
+    email.href = 'mailto:' + (data.seller.email || '');
+    document.getElementById('msrInsta').textContent = data.seller.instagram || '';
+    document.getElementById('msrAddress').textContent = data.seller.address || '';
+    document.getElementById('msrHours').textContent = data.seller.hours || '';
   }
 
-  /* ---------- admin state toggling ---------- */
   function applyAdminState(){
     document.getElementById('msrAdminBtn').classList.toggle('on', isAdmin);
-    document.getElementById('msrPublishBtn').style.display = isAdmin ? 'flex' : 'none';
     document.querySelectorAll('[data-field]').forEach(el=>{
       el.setAttribute('contenteditable', isAdmin ? 'true' : 'false');
     });
@@ -696,7 +633,6 @@
     });
   }
 
-  /* ---------- rotate on drag ---------- */
   function attachRotate(medallion){
     if(!medallion || medallion.dataset.rotBound) return;
     medallion.dataset.rotBound = '1';
@@ -711,8 +647,7 @@
       return Math.atan2(y-cy, x-cx) * 180/Math.PI;
     }
     medallion.addEventListener('pointerdown', (e)=>{
-      const targetLabel = e.target.closest('.msr-upload-label');
-      if(targetLabel) return; // let upload click through
+      if(e.target.closest('.msr-upload-label')) return;
       dragging = true;
       medallion.setPointerCapture(e.pointerId);
       const rect = medallion.getBoundingClientRect();
@@ -724,8 +659,7 @@
     medallion.addEventListener('pointermove', (e)=>{
       if(!dragging) return;
       const a = angleAt(e.clientX, e.clientY);
-      const newRot = startRot + (a - startAngle);
-      img.style.setProperty('--rot', newRot + 'deg');
+      img.style.setProperty('--rot', (startRot + (a - startAngle)) + 'deg');
     });
     function end(e){
       if(!dragging) return;
@@ -736,7 +670,6 @@
     medallion.addEventListener('pointercancel', end);
   }
 
-  /* ---------- decorative blob dragging ---------- */
   function attachBlobDrag(){
     document.querySelectorAll('[data-blob]').forEach(blob=>{
       let dragging=false, offX=0, offY=0;
@@ -761,13 +694,13 @@
     });
   }
 
-  /* ---------- editable text commit ---------- */
   function bindEditableCommit(){
     root.addEventListener('focusout', (e)=>{
       const el = e.target.closest('[data-field]');
       if(!el || !isAdmin) return;
       const field = el.dataset.field;
       let val = el.textContent.trim();
+      
       if(field.startsWith('product.')){
         const [, id, key] = field.split('.');
         const prod = data.products.find(p=>p.id===id);
@@ -775,24 +708,21 @@
       }else{
         setPath(data, field, val);
       }
+      
       if(field==='seller.shopName'){
         document.getElementById('msrFooterShop').textContent = val;
       }
       if(field==='seller.phone' || field==='seller.email'){
         renderContact();
       }
-      if(field==='seller.years' || field==='seller.pieces' || field==='seller.students'){
-        syncStatDisplays();
-      }
-      scheduleSave();
+      
+      // ذخیره مستقیم بدون انتظار
+      set(ref(db, 'storeData'), data)
+        .then(() => toast('تغییرات ذخیره شد'))
+        .catch(err => toast('خطا در ذخیره: ' + err.message));
     }, true);
   }
 
-  /* ---------- image upload ---------- */
-  // Resizes to a generous max dimension (medallions render up to ~260px,
-  // but at 2x/3x device pixel ratio that needs ~800px source to look sharp).
-  // Then compresses adaptively: starts at high quality and only steps down
-  // if the encoded file is still too large, instead of always crushing it.
   function resizeImage(file, maxDim, cb){
     const reader = new FileReader();
     reader.onload = ()=>{
@@ -808,13 +738,8 @@
         ctx.imageSmoothingQuality = 'high';
         ctx.drawImage(img,0,0,c.width,c.height);
 
-        const TARGET_BYTES = 550000; // ~550KB per image keeps a full shop well under the 5MB storage cap
-        let quality = 0.94;
+        let quality = 0.8;
         let dataUrl = c.toDataURL('image/jpeg', quality);
-        while(dataUrl.length > TARGET_BYTES && quality > 0.5){
-          quality -= 0.08;
-          dataUrl = c.toDataURL('image/jpeg', quality);
-        }
         cb(dataUrl);
       };
       img.onerror = ()=> toast('⚠ این عکس خوانده نشد');
@@ -829,8 +754,8 @@
       if(!input || !isAdmin) return;
       const file = input.files[0];
       if(!file) return;
-      toast('در حال پردازش عکس…');
-      resizeImage(file, 900, (dataUrl)=>{
+      toast('در حال آپلود عکس…');
+      resizeImage(file, 500, (dataUrl)=>{
         if(input.dataset.uploadProduct){
           const prod = data.products.find(p=>p.id===input.dataset.uploadProduct);
           if(prod){ prod.image = dataUrl; }
@@ -843,7 +768,7 @@
         renderAbout();
         document.getElementById('msrHeroImg').src = data.seller.heroImage;
         applyAdminState();
-        saveNow(); // save right away — an upload is a deliberate action, not a keystroke
+        saveToFirebase();
       });
     });
   }
@@ -855,7 +780,7 @@
       tag:'جدید', hueA: Math.floor(Math.random()*360), hueB: Math.floor(Math.random()*360), image:null
     });
     ensureImages(data);
-    scheduleSave();
+    saveToFirebase();
     renderProducts();
     applyAdminState();
   }
@@ -866,13 +791,12 @@
       if(!btn) return;
       const id = btn.dataset.removeProduct;
       data.products = data.products.filter(p=>p.id!==id);
-      scheduleSave();
+      saveToFirebase();
       renderProducts();
       applyAdminState();
     });
   }
 
-  /* seller avatar / hero upload labels (added dynamically since not in initial markup loop) */
   function injectSellerUploadLabels(){
     const aboutM = document.getElementById('msrAboutMedallion');
     if(!aboutM.querySelector('.msr-upload-label')){
@@ -892,7 +816,6 @@
     }
   }
 
-  /* ---------- routing ---------- */
   function navigate(page){
     document.querySelectorAll('.msr-page').forEach(p=>p.classList.toggle('active', p.dataset.page===page));
     document.querySelectorAll('.msr-link').forEach(l=>l.classList.toggle('active', l.dataset.nav===page));
@@ -910,7 +833,6 @@
     });
   }
 
-  /* ---------- scroll reveal ---------- */
   let observer;
   function observeCards(){
     if(observer) observer.disconnect();
@@ -920,86 +842,6 @@
     document.querySelectorAll('.msr-card').forEach(c=>observer.observe(c));
   }
 
-  /* ---------- publish: bake current data into a standalone HTML file ---------- */
-  function buildStaticHtml(){
-    const styleTag = document.getElementById('msrStyles');
-    const scriptTag = document.getElementById('msrScript');
-    const rootClone = document.getElementById('msrRoot').cloneNode(true);
-
-    // strip admin-only affordances so a fresh visitor sees a clean public site
-    rootClone.querySelectorAll('[contenteditable]').forEach(el=>el.removeAttribute('contenteditable'));
-    rootClone.querySelectorAll('.msr-upload-label').forEach(el=>el.remove());
-    rootClone.querySelectorAll('.msr-edit-tools').forEach(el=>el.remove());
-    rootClone.querySelectorAll('.msr-add-card').forEach(el=>el.remove());
-    rootClone.querySelectorAll('.msr-modal-backdrop').forEach(el=>el.classList.remove('show'));
-    rootClone.querySelectorAll('.msr-links').forEach(el=>el.classList.remove('open'));
-    const adminBtnClone = rootClone.querySelector('#msrAdminBtn');
-    if(adminBtnClone) adminBtnClone.classList.remove('on');
-    const pubBtnClone = rootClone.querySelector('#msrPublishBtn');
-    if(pubBtnClone) pubBtnClone.style.display = 'none';
-
-    // bake the current data straight into the seed tag
-    const seedClone = rootClone.querySelector('#msrSeedData');
-    if(seedClone) seedClone.textContent = JSON.stringify(data);
-
-    const titleText = (data.seller.shopName || 'فروشگاه میناکاری').replace(/</g,'&lt;');
-    return '<!DOCTYPE html>\n<html lang="fa" dir="rtl"><head><meta charset="UTF-8">'
-      + '<meta name="viewport" content="width=device-width, initial-scale=1.0">'
-      + '<title>' + titleText + '</title>'
-      + styleTag.outerHTML + '</head><body>'
-      + rootClone.outerHTML
-      + scriptTag.outerHTML
-      + '</body></html>';
-  }
-
-  function downloadBlob(content, type, filename){
-    const blob = new Blob([content], {type});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url; a.download = filename;
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(()=>URL.revokeObjectURL(url), 4000);
-  }
-
-  function exportStaticHtml(){
-    const html = buildStaticHtml();
-    const name = (data.seller.shopName || 'minasara-shop').trim().replace(/\s+/g,'-') || 'shop';
-    downloadBlob(html, 'text/html', name + '-static.html');
-    toast('نسخه‌ی عمومی دانلود شد');
-  }
-  function exportJsonBackup(){
-    downloadBlob(JSON.stringify(data, null, 2), 'application/json', 'minasara-backup.json');
-    toast('پشتیبان دانلود شد');
-  }
-  function importJsonBackup(file){
-    const reader = new FileReader();
-    reader.onload = ()=>{
-      try{
-        const incoming = JSON.parse(reader.result);
-        if(!incoming || !Array.isArray(incoming.products)) throw new Error('bad format');
-        data = ensureImages(incoming);
-        renderAll();
-        saveNow();
-        toast('پشتیبان بارگذاری شد');
-      }catch(e){ toast('⚠ فایل پشتیبان معتبر نیست'); }
-    };
-    reader.readAsText(file);
-  }
-  function bindPublishPanel(){
-    const backdrop = document.getElementById('msrPublishBackdrop');
-    document.getElementById('msrPublishBtn').addEventListener('click', ()=> backdrop.classList.add('show'));
-    document.getElementById('msrPublishCloseBtn').addEventListener('click', ()=> backdrop.classList.remove('show'));
-    backdrop.addEventListener('click', (e)=>{ if(e.target===backdrop) backdrop.classList.remove('show'); });
-    document.getElementById('msrExportStaticBtn').addEventListener('click', exportStaticHtml);
-    document.getElementById('msrExportJsonBtn').addEventListener('click', exportJsonBackup);
-    document.getElementById('msrImportJsonInput').addEventListener('change', (e)=>{
-      const file = e.target.files[0];
-      if(file) importJsonBackup(file);
-      e.target.value = '';
-    });
-  }
-
-  /* ---------- admin login ---------- */
   function bindAdminLogin(){
     const backdrop = document.getElementById('msrModalBackdrop');
     const pinInput = document.getElementById('msrPinInput');
@@ -1008,7 +850,7 @@
       if(isAdmin){
         isAdmin = false;
         applyAdminState();
-        renderProducts(); // remove add-card
+        renderProducts();
         toast('از حالت مدیر خارج شدید');
         return;
       }
@@ -1036,7 +878,6 @@
     pinInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter') tryLogin(); });
   }
 
-  /* ---------- mouse-reactive glaze ---------- */
   function bindGlazeMouse(){
     window.addEventListener('pointermove', (e)=>{
       const mx = (e.clientX/window.innerWidth*100).toFixed(1)+'%';
@@ -1046,18 +887,14 @@
     });
   }
 
-  /* ---------- init ---------- */
-  async function init(){
-    await loadData();
-    renderAll();
+  function init(){
+    listenToFirebase();
     injectSellerUploadLabels();
-    applyAdminState();
     bindNav();
     bindEditableCommit();
     bindUploads();
     bindRemoveProduct();
     bindAdminLogin();
-    bindPublishPanel();
     bindGlazeMouse();
     attachBlobDrag();
     attachRotate(document.getElementById('msrHeroMedallion'));
@@ -1065,5 +902,6 @@
     navigate('home');
   }
   init();
-})();
 </script>
+</body>
+</html>
