@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>کارگاه مینا سرا</title>
+<style id="msrStyles">
+@import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@500;700&family=Vazirmatn:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --bg:#120a1c;
+  --bg2:#1c1030;
+  --turquoise:#22b8ae;
+  --blue:#4a5fd1;
+  --violet:#9c6bf0;
+  --gold:#cda13a;
+  --ivory:#f3ead9;
+  --ink:#0d0712;
+  --glass:rgba(243,234,217,0.06);
+  --glass-border:rgba(243,234,217,0.14);
+  --mx:50%;
+  --my:30%;
+  --radius:22px;
+}
+
+*{box-sizing:border-box;}
+
+.msr-root{
+  direction:rtl;
+  font-family:'Vazirmatn',sans-serif;
+  background:var(--bg);
+  color:var(--ivory);
+  min-height:100vh;
+  position:relative;
+  overflow-x:hidden;
+  line-height:1.7;
+}
+
+.msr-root h1,.msr-root h2,.msr-root h3,.msr-root .msr-display{
+  font-family:'Noto Naskh Arabic','Vazirmatn',serif;
+  font-weight:700;
+  letter-spacing:0.2px;
+}
+
+.msr-glaze{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:
+    radial-gradient(600px 500px at var(--mx) var(--my), rgba(156,107,240,0.35), transparent 60%),
+    radial-gradient(800px 600px at 15% 15%, rgba(34,184,174,0.28), transparent 55%),
+    radial-gradient(700px 700px at 85% 20%, rgba(74,95,209,0.30), transparent 55%),
+    radial-gradient(900px 900px at 50% 100%, rgba(205,161,58,0.14), transparent 60%),
+    linear-gradient(160deg,var(--bg) 0%,var(--bg2) 100%);
+  transition:background-position 0.2s ease-out;
+}
+.msr-blob{
+  position:fixed;
+  border-radius:50%;
+  filter:blur(60px);
+  opacity:0.55;
+  z-index:0;
+  pointer-events:auto;
+  cursor:grab;
+  mix-blend-mode:screen;
+  animation:msrDrift 22s ease-in-out infinite;
+}
+.msr-blob:active{cursor:grabbing;animation-play-state:paused;}
+.msr-blob.b1{width:380px;height:380px;background:radial-gradient(circle,var(--violet),transparent 70%);top:8%;right:10%;animation-delay:0s;}
+.msr-blob.b2{width:300px;height:300px;background:radial-gradient(circle,var(--turquoise),transparent 70%);bottom:12%;left:8%;animation-delay:-7s;}
+.msr-blob.b3{width:260px;height:260px;background:radial-gradient(circle,var(--gold),transparent 70%);top:45%;left:45%;animation-delay:-14s;}
+
+@keyframes msrDrift{
+  0%,100%{transform:translate(0,0) scale(1);}
+  33%{transform:translate(18px,-24px) scale(1.06);}
+  66%{transform:translate(-16px,14px) scale(0.96);}
+}
+
+.msr-nav{
+  position:sticky;top:0;z-index:40;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 5vw;
+  background:rgba(18,10,28,0.55);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--glass-border);
+}
+.msr-brand{display:flex;align-items:center;gap:10px;cursor:pointer;background:none;border:none;color:inherit;}
+.msr-brand-mark{
+  width:34px;height:34px;border-radius:50%;
+  background:conic-gradient(from 120deg,var(--turquoise),var(--violet),var(--blue),var(--gold),var(--turquoise));
+  box-shadow:0 0 18px rgba(156,107,240,0.5);
+}
+.msr-brand-name{font-family:'Noto Naskh Arabic',serif;font-size:1.15rem;font-weight:700;}
+.msr-links{display:flex;gap:6px;align-items:center;}
+.msr-link{
+  font-family:'Vazirmatn';font-size:0.95rem;color:var(--ivory);opacity:0.75;
+  background:none;border:none;cursor:pointer;padding:9px 16px;border-radius:999px;
+  transition:opacity .2s,background .2s;
+}
+.msr-link:hover{opacity:1;background:var(--glass);}
+.msr-link.active{opacity:1;background:var(--glass);border:1px solid var(--glass-border);}
+.msr-admin-btn{
+  width:36px;height:36px;border-radius:50%;border:1px solid var(--glass-border);
+  background:var(--glass);color:var(--ivory);cursor:pointer;font-size:15px;
+  display:flex;align-items:center;justify-content:center;
+}
+.msr-admin-btn.on{background:var(--gold);color:var(--ink);border-color:var(--gold);}
+.msr-menu-toggle{display:none;background:none;border:1px solid var(--glass-border);color:var(--ivory);width:38px;height:38px;border-radius:10px;cursor:pointer;font-size:18px;}
+
+.msr-main{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 5vw 90px;}
+.msr-page{display:none;animation:msrFade .5s ease both;}
+.msr-page.active{display:block;}
+@keyframes msrFade{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+
+.msr-hero{display:grid;grid-template-columns:1.15fr 0.85fr;gap:48px;align-items:center;padding:72px 0 56px;}
+.msr-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:0.8rem;letter-spacing:1.5px;color:var(--turquoise);
+  border:1px solid rgba(34,184,174,0.4);padding:6px 14px;border-radius:999px;
+  margin-bottom:22px;background:rgba(34,184,174,0.08);
+}
+.msr-hero h1{font-size:clamp(2.1rem,4.4vw,3.4rem);line-height:1.35;margin:0 0 20px;}
+.msr-hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--turquoise),var(--violet) 60%,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.msr-hero p{font-size:1.05rem;color:rgba(243,234,217,0.8);max-width:46ch;margin-bottom:30px;}
+.msr-cta-row{display:flex;gap:14px;flex-wrap:wrap;}
+.msr-btn{
+  font-family:'Vazirmatn';font-weight:600;font-size:0.95rem;
+  padding:13px 26px;border-radius:999px;border:none;cursor:pointer;
+  transition:transform .2s,box-shadow .2s;
+}
+.msr-btn.primary{background:linear-gradient(90deg,var(--turquoise),var(--blue));color:#f6fbfa;box-shadow:0 8px 24px rgba(74,95,209,0.35);}
+.msr-btn.ghost{background:var(--glass);color:var(--ivory);border:1px solid var(--glass-border);}
+.msr-btn:hover{transform:translateY(-2px);}
+
+.msr-hero-medallion{
+  position:relative;width:min(360px,80vw);aspect-ratio:1;margin:0 auto;
+  border-radius:50%;border:1px solid var(--glass-border);background:var(--glass);
+  display:flex;align-items:center;justify-content:center;
+}
+.msr-hero-medallion::before{
+  content:'';position:absolute;inset:-14px;border-radius:50%;
+  background:conic-gradient(from 0deg,var(--turquoise),var(--violet),var(--blue),var(--gold),var(--turquoise));
+  opacity:0.5;filter:blur(18px);z-index:-1;animation:msrSpin 16s linear infinite;
+}
+@keyframes msrSpin{to{transform:rotate(360deg);}}
+
+.msr-stats{display:flex;gap:28px;margin-top:44px;flex-wrap:wrap;}
+.msr-stat b{display:block;font-family:'Noto Naskh Arabic',serif;font-size:1.6rem;color:var(--gold);}
+.msr-stat span{font-size:0.82rem;color:rgba(243,234,217,0.65);}
+
+.msr-section-head{margin:64px 0 30px;}
+.msr-section-head h2{font-size:clamp(1.5rem,2.6vw,2.1rem);margin:0 0 8px;}
+.msr-section-head p{color:rgba(243,234,217,0.65);max-width:60ch;}
+
+.msr-medallion{
+  position:relative;border-radius:50%;overflow:hidden;
+  border:1px solid var(--glass-border);
+  background:radial-gradient(circle at 30% 30%,rgba(255,255,255,0.08),transparent 60%),var(--glass);
+  touch-action:none;
+}
+.msr-medallion img{
+  width:100%;height:100%;object-fit:cover;position:absolute;inset:0;
+  transform:rotate(var(--rot,0deg));transform-origin:50% 50%;
+  cursor:grab;user-select:none;-webkit-user-drag:none;
+}
+.msr-medallion:active img{cursor:grabbing;}
+.msr-medallion .msr-rot-hint{
+  position:absolute;bottom:6px;left:50%;transform:translateX(-50%);
+  font-size:0.65rem;background:rgba(13,7,18,0.55);padding:3px 9px;border-radius:999px;
+  opacity:0;transition:opacity .2s;pointer-events:none;
+}
+.msr-medallion:hover .msr-rot-hint{opacity:0.85;}
+
+.msr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:26px;}
+.msr-card{
+  background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius);
+  padding:20px;display:flex;flex-direction:column;align-items:center;text-align:center;
+  transition:transform .25s,border-color .25s;opacity:0;transform:translateY(18px);
+}
+.msr-card.in-view{opacity:1;transform:none;}
+.msr-card:hover{transform:translateY(-6px);border-color:rgba(205,161,58,0.5);}
+.msr-card .msr-medallion{width:150px;height:150px;margin-bottom:16px;}
+.msr-card h3{font-size:1.05rem;margin:0 0 4px;}
+.msr-price{color:var(--gold);font-weight:700;font-family:'Noto Naskh Arabic',serif;margin-bottom:6px;}
+.msr-size-row{display:flex;gap:5px;align-items:baseline;font-size:0.78rem;color:rgba(243,234,217,0.65);margin-bottom:10px;}
+.msr-size-label{color:var(--turquoise);}
+.msr-desc{font-size:0.86rem;color:rgba(243,234,217,0.72);margin-bottom:12px;min-height:2.6em;}
+.msr-tag{font-size:0.72rem;color:var(--turquoise);border:1px solid rgba(34,184,174,0.4);padding:2px 10px;border-radius:999px;}
+
+.msr-add-card{
+  border:1.5px dashed var(--glass-border);border-radius:var(--radius);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;
+  min-height:270px;cursor:pointer;color:rgba(243,234,217,0.6);background:none;
+  font-family:'Vazirmatn';font-size:0.9rem;
+}
+.msr-add-card:hover{color:var(--ivory);border-color:var(--gold);}
+.msr-add-card span{font-size:1.8rem;}
+
+[contenteditable="true"]{outline:1px dashed rgba(205,161,58,0.55);border-radius:6px;padding:1px 4px;}
+[contenteditable="true"]:focus{outline:1px solid var(--gold);background:rgba(205,161,58,0.08);}
+
+.msr-edit-tools{display:flex;gap:8px;margin-top:10px;}
+.msr-icon-btn{
+  width:30px;height:30px;border-radius:50%;border:1px solid var(--glass-border);
+  background:rgba(13,7,18,0.5);color:var(--ivory);cursor:pointer;font-size:13px;
+  display:flex;align-items:center;justify-content:center;
+}
+.msr-icon-btn.danger:hover{background:#c0405a;border-color:#c0405a;}
+.msr-upload-label{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:rgba(13,7,18,0.45);opacity:0;transition:opacity .2s;cursor:pointer;
+  font-size:1.2rem;border-radius:50%;
+}
+.msr-medallion:hover .msr-upload-label{opacity:1;}
+.msr-upload-label input{display:none;}
+
+.msr-about{display:grid;grid-template-columns:0.8fr 1.2fr;gap:48px;align-items:start;padding:20px 0;}
+.msr-about .msr-medallion{width:260px;height:260px;margin:0 auto;}
+.msr-about-name{font-size:1.6rem;margin:18px 0 2px;text-align:center;}
+.msr-about-title{color:var(--turquoise);text-align:center;font-size:0.9rem;margin-bottom:0;}
+.msr-bio{font-size:1rem;color:rgba(243,234,217,0.85);white-space:pre-wrap;}
+.msr-fact-row{display:flex;gap:20px;margin-top:26px;flex-wrap:wrap;}
+.msr-fact{background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;padding:14px 18px;flex:1;min-width:140px;}
+.msr-fact b{display:block;color:var(--gold);font-family:'Noto Naskh Arabic',serif;font-size:1.2rem;}
+.msr-fact span{font-size:0.78rem;color:rgba(243,234,217,0.6);}
+
+.msr-contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;padding:10px 0 40px;}
+.msr-contact-card{
+  background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius);
+  padding:26px;display:flex;flex-direction:column;gap:10px;
+}
+.msr-contact-card h3{margin:0 0 6px;font-size:1.05rem;color:var(--turquoise);}
+.msr-contact-row{display:flex;align-items:center;gap:10px;font-size:0.95rem;}
+.msr-contact-row .ic{width:26px;text-align:center;opacity:0.8;}
+.msr-contact-card a{color:var(--ivory);text-decoration:none;border-bottom:1px dotted rgba(243,234,217,0.4);}
+.msr-contact-card a:hover{color:var(--gold);}
+
+.msr-modal-backdrop{
+  position:fixed;inset:0;background:rgba(9,5,14,0.72);backdrop-filter:blur(4px);
+  z-index:100;display:none;align-items:center;justify-content:center;padding:20px;
+}
+.msr-modal-backdrop.show{display:flex;}
+.msr-modal{
+  background:var(--bg2);border:1px solid var(--glass-border);border-radius:18px;
+  padding:28px;max-width:340px;width:100%;text-align:center;
+}
+.msr-modal h3{margin:0 0 6px;}
+.msr-modal p{font-size:0.85rem;color:rgba(243,234,217,0.65);margin-bottom:18px;}
+.msr-modal input{
+  width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--glass-border);
+  background:rgba(255,255,255,0.05);color:var(--ivory);font-family:'Vazirmatn';margin-bottom:14px;
+  text-align:center;letter-spacing:3px;font-size:1.1rem;
+}
+.msr-modal-actions{display:flex;gap:10px;}
+.msr-modal-actions .msr-btn{flex:1;}
+.msr-modal-err{color:#e08297;font-size:0.8rem;min-height:1.2em;margin:-6px 0 8px;}
+
+.msr-toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--gold);color:var(--ink);padding:10px 22px;border-radius:999px;
+  font-size:0.85rem;font-weight:600;z-index:200;opacity:0;transition:opacity .25s,transform .25s;
+  pointer-events:none;
+}
+.msr-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+.msr-footer{
+  position:relative;z-index:1;text-align:center;padding:30px 5vw 50px;
+  color:rgba(243,234,217,0.45);font-size:0.8rem;border-top:1px solid var(--glass-border);
+}
+
+@media (max-width:860px){
+  .msr-hero{grid-template-columns:1fr;text-align:center;padding-top:44px;}
+  .msr-hero p{margin-inline:auto;}
+  .msr-cta-row{justify-content:center;}
+  .msr-stats{justify-content:center;}
+  .msr-about{grid-template-columns:1fr;}
+  .msr-contact-grid{grid-template-columns:1fr;}
+  .msr-links{
+    position:fixed;inset-inline:0;top:64px;background:rgba(18,10,28,0.97);
+    flex-direction:column;padding:14px 5vw;gap:4px;border-bottom:1px solid var(--glass-border);
+    transform:translateY(-130%);transition:transform .25s;z-index:39;
+  }
+  .msr-links.open{transform:translateY(0);}
+  .msr-menu-toggle{display:flex;align-items:center;justify-content:center;}
+  .msr-link{width:100%;text-align:center;}
+}
+</style>
+</head>
+
+<body>
+<div class="msr-root" id="msrRoot" dir="rtl" lang="fa">
+  <div class="msr-glaze" id="msrGlaze"></div>
+  <div class="msr-blob b1" data-blob></div>
+  <div class="msr-blob b2" data-blob></div>
+  <div class="msr-blob b3" data-blob></div>
+
+  <nav class="msr-nav">
+    <button class="msr-brand" data-nav="home">
+      <span class="msr-brand-mark"></span>
+      <span class="msr-brand-name" id="msrShopName">کارگاه مینا سرا</span>
+    </button>
+    <button class="msr-menu-toggle" id="msrMenuToggle" aria-label="منو">☰</button>
+    <div class="msr-links" id="msrLinks">
+      <button class="msr-link" data-nav="home">خانه</button>
+      <button class="msr-link" data-nav="products">محصولات</button>
+      <button class="msr-link" data-nav="about">درباره فروشنده</button>
+      <button class="msr-link" data-nav="contact">تماس</button>
+      <button class="msr-admin-btn" id="msrAdminBtn" title="ورود مدیر">⚙</button>
+    </div>
+  </nav>
+
+  <main class="msr-main">
+    <!-- HOME -->
+    <section class="msr-page" data-page="home">
+      <div class="msr-hero">
+        <div>
+          <span class="msr-eyebrow">هنر دست، از دل آتش و رنگ</span>
+          <h1>میناکاری اصیل ایرانی، <em>روایتی از نور روی مس</em></h1>
+          <p id="msrHeroText">هر قطعه در کارگاه ما با دست ساخته، قلم‌زنی و در کوره پخته می‌شود تا رنگ‌های میناکاری برای نسل‌ها ماندگار بماند.</p>
+          <div class="msr-cta-row">
+            <button class="msr-btn primary" data-nav="products">دیدن محصولات</button>
+            <button class="msr-btn ghost" data-nav="about">آشنایی با هنرمند</button>
+          </div>
+          <div class="msr-stats" id="msrStats"></div>
+        </div>
+        <div class="msr-hero-medallion msr-medallion" id="msrHeroMedallion" data-rotatable>
+          <img id="msrHeroImg" alt="نمونه میناکاری" draggable="false">
+          <span class="msr-rot-hint">بکش تا بچرخانی</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section class="msr-page" data-page="products">
+      <div class="msr-section-head">
+        <h2>محصولات کارگاه</h2>
+        <p>روی هر قاب می‌توانید بکشید تا بچرخد و زوایای مختلف قلم‌زنی را ببینید.</p>
+      </div>
+      <div class="msr-grid" id="msrProductGrid"></div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="msr-page" data-page="about">
+      <div class="msr-section-head">
+        <h2>درباره فروشنده</h2>
+        <p>داستان کارگاه و دستانی که این قطعات را می‌سازند.</p>
+      </div>
+      <div class="msr-about">
+        <div>
+          <div class="msr-medallion" id="msrAboutMedallion" data-rotatable style="width:260px;height:260px;">
+            <img id="msrAboutImg" alt="تصویر هنرمند" draggable="false">
+            <span class="msr-rot-hint">بکش تا بچرخانی</span>
+          </div>
+          <h3 class="msr-about-name" id="msrSellerName" contenteditable="false" data-field="seller.name">اعظم شمس خوزانی</h3>
+          <p class="msr-about-title" id="msrSellerTitle" contenteditable="false" data-field="seller.title">استاد میناکاری، اصفهان</p>
+        </div>
+        <div>
+          <p class="msr-bio" id="msrBio" contenteditable="false" data-field="seller.bio"></p>
+          <div class="msr-fact-row" id="msrFactRow"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="msr-page" data-page="contact">
+      <div class="msr-section-head">
+        <h2>تماس با ما</h2>
+        <p>برای سفارش، سوال یا بازدید از کارگاه در ارتباط باشید.</p>
+      </div>
+      <div class="msr-contact-grid">
+        <div class="msr-contact-card">
+          <h3>راه‌های ارتباطی</h3>
+          <div class="msr-contact-row"><span class="ic">📞</span><a id="msrPhoneLink" href="#" contenteditable="false" data-field="seller.phone"></a></div>
+          <div class="msr-contact-row"><span class="ic">✉️</span><a id="msrEmailLink" href="#" contenteditable="false" data-field="seller.email"></a></div>
+          <div class="msr-contact-row"><span class="ic">📷</span><span id="msrInsta" contenteditable="false" data-field="seller.instagram"></span></div>
+        </div>
+        <div class="msr-contact-card">
+          <h3>آدرس کارگاه</h3>
+          <div class="msr-contact-row"><span class="ic">📍</span><span id="msrAddress" contenteditable="false" data-field="seller.address" style="text-align:right;"></span></div>
+          <div class="msr-contact-row"><span class="ic">🕐</span><span id="msrHours" contenteditable="false" data-field="seller.hours"></span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="msr-footer">
+    <span id="msrFooterShop">کارگاه مینا سرا</span> — ساخته‌شده با عشق به هنر ایرانی
+  </footer>
+
+  <div class="msr-modal-backdrop" id="msrModalBackdrop">
+    <div class="msr-modal">
+      <h3 id="msrModalTitle">ورود مدیر فروشگاه</h3>
+      <p>برای ویرایش عکس‌ها و متن‌های سایت، رمز مدیر را وارد کنید.</p>
+      <input type="password" inputmode="numeric" id="msrPinInput" placeholder="••••" maxlength="12">
+      <div class="msr-modal-err" id="msrModalErr"></div>
+      <div class="msr-modal-actions">
+        <button class="msr-btn ghost" id="msrModalCancel">انصراف</button>
+        <button class="msr-btn primary" id="msrModalOk">ورود</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="msr-toast" id="msrToast"></div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+  import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBzYxh5QPlViwv4M0fSJGf2uALdtBXm5CU",
+    authDomain: "minakari-4392b.firebaseapp.com",
+    databaseURL: "https://minakari-4392b-default-rtdb.firebaseio.com",
+    projectId: "minakari-4392b",
+    storageBucket: "minakari-4392b.firebasestorage.app",
+    messagingSenderId: "833708259975",
+    appId: "1:833708259975:web:526f040d4086aa6f785622",
+    measurementId: "G-W1LZTTCFTS"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  const ADMIN_PIN = "1234";
+  let isAdmin = false;
+  let data = null;
+  const root = document.getElementById('msrRoot');
+
+  function makePlaceholder(hueA,hueB,seed){
+    const c = document.createElement('canvas');
+    c.width = 400; c.height = 400;
+    const ctx = c.getContext('2d');
+    const g = ctx.createLinearGradient(0,0,400,400);
+    g.addColorStop(0, `hsl(${hueA} 70% 55%)`);
+    g.addColorStop(0.5, `hsl(${(hueA+hueB)/2} 65% 40%)`);
+    g.addColorStop(1, `hsl(${hueB} 75% 35%)`);
+    ctx.fillStyle = g;
+    ctx.fillRect(0,0,400,400);
+    for(let i=0;i<6;i++){
+      const rx = 60 + ((seed*13+i*47) % 280);
+      const ry = 60 + ((seed*29+i*61) % 280);
+      const rad = 40 + ((seed*7+i*23) % 90);
+      const grad = ctx.createRadialGradient(rx,ry,4,rx,ry,rad);
+      grad.addColorStop(0, `hsla(${(hueA+i*40)%360} 90% 75% / 0.35)`);
+      grad.addColorStop(1, 'transparent');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(rx,ry,rad,0,Math.PI*2);
+      ctx.fill();
+    }
+    return c.toDataURL('image/jpeg',0.85);
+  }
+
+  function defaultData(){
+    return {
+      seller:{
+        shopName:"کارگاه مینا سرا",
+        name:"اعظم شمس خوزانی",
+        title:"استاد میناکاری، اصفهان",
+        bio:"بیش از هجده سال است که مس را با آتش و رنگ به روایت تبدیل می‌کنم. کارگاه من در دل بازار سنتی اصفهان، همان جایی است که هنر میناکاری قرن‌هاست نفس می‌کشد. هر ظرف پیش از رسیدن به دست شما، چند بار داخل کوره پخته می‌شود تا رنگ‌ها برای همیشه روی مس بمانند.",
+        years:"۱۰",
+        students:"۳",
+        pieces:"۱۰۰",
+        phone:"۰۹۱۳۸۸۹۷۳۲۸",
+        email:"info@minasara.example",
+        instagram:"@minasara.workshop",
+        address:"اصفهان،خمینی شهر، خیابان کهندژی، کوچه هنر، پلاک ۱۲",
+        hours:"شنبه تا پنجشنبه، ۹ صبح تا ۷ عصر",
+        avatar:null,
+        heroImage:null
+      },
+      products:[
+        {id:'p1',name:'بشقاب میناکاری بزرگ',price:'۲٬۸۵۰٬۰۰۰ تومان',size:'قطر ۳۰ سانتی‌متر',desc:'قلم‌زنی دست، طرح ترنج سنتی روی بدنه مسی، مناسب دیوارکوب یا تزیین میز.',tag:'بشقاب',hueA:190,hueB:280,image:null},
+        {id:'p2',name:'گوشواره مینای طاووسی',price:'۹۸۰٬۰۰۰ تومان',size:'طول ۴ سانتی‌متر',desc:'نقره خالص با روکش مینای آبی و فیروزه‌ای، طرح پر طاووس، سبک و مناسب استفاده روزانه.',tag:'جواهر',hueA:270,hueB:20,image:null},
+        {id:'p3',name:'کاسه میوه‌خوری',price:'۳٬۴۰۰٬۰۰۰ تومان',size:'قطر ۲۲ ، ارتفاع ۱۰ سانتی‌متر',desc:'مناسب پذیرایی و میز شام، پایه مسی ضخیم و لبه طلاکوب دست‌ساز.',tag:'ظرف',hueA:210,hueB:150,image:null},
+        {id:'p4',name:'جعبه جواهرات مینا',price:'۱٬۶۵۰٬۰۰۰ تومان',size:'۱۲ × ۸ × ۶ سانتی‌متر',desc:'دردار با لولای فلزی، آستر مخمل داخل، طرح گل و مرغ روی درب.',tag:'جعبه',hueA:320,hueB:45,image:null},
+        {id:'p5',name:'گردنبند مدالیون مینا',price:'۱٬۲۰۰٬۰۰۰ تومان',size:'قطر مدالیون ۳ سانتی‌متر، زنجیر ۴۵ سانتی‌متر',desc:'زنجیر نقره با آویز مدالیون میناکاری‌شده، هدیه‌ای ماندگار برای مناسبت‌های خاص.',tag:'جواهر',hueA:160,hueB:260,image:null},
+        {id:'p6',name:'زیرلیوانی شش‌تایی',price:'۷۵۰٬۰۰۰ تومان',size:'قطر هر عدد ۹ سانتی‌متر (۶ عدد)',desc:'ست شش عددی با جامدادی مسی، هر قطعه با طرح میناکاری منحصربه‌فرد.',tag:'دکوری',hueA:40,hueB:200,image:null}
+      ]
+    };
+  }
+
+  function ensureImages(d){
+    if(!d.seller) d.seller = {};
+    if(!d.products) d.products = [];
+    if(!d.seller.avatar) d.seller.avatar = makePlaceholder(280,200,3);
+    if(!d.seller.heroImage) d.seller.heroImage = makePlaceholder(190,320,7);
+    d.products.forEach((p,i)=>{ if(!p.image) p.image = makePlaceholder(p.hueA||200,p.hueB||300,i+1); });
+    return d;
+  }
+
+  function setPath(obj,path,val){
+    const parts = path.split('.');
+    let o = obj;
+    for(let i=0;i<parts.length-1;i++) o = o[parts[i]];
+    o[parts[parts.length-1]] = val;
+  }
+
+  let saveTimer = null;
+  function saveToFirebase(){
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => {
+      set(ref(db, 'storeData'), data)
+        .then(() => toast('ذخیره شد در دیتابیس'))
+        .catch(err => toast('خطا در ذخیره: ' + err.message));
+    }, 400);
+  }
+
+  function listenToFirebase(){
+    const dataRef = ref(db, 'storeData');
+    onValue(dataRef, (snapshot) => {
+      const val = snapshot.val();
+      if(val){
+        data = ensureImages(val);
+      } else {
+        data = ensureImages(defaultData());
+        saveToFirebase();
+      }
+      renderAll();
+    });
+  }
+
+  let toastTimer=null;
+  function toast(msg){
+    const el = document.getElementById('msrToast');
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=>el.classList.remove('show'), 1800);
+  }
+
+  function renderAll(){
+    if(!data) return;
+    document.getElementById('msrShopName').textContent = data.seller.shopName || '';
+    document.getElementById('msrFooterShop').textContent = data.seller.shopName || '';
+    document.getElementById('msrHeroImg').src = data.seller.heroImage || '';
+
+    document.getElementById('msrStats').innerHTML = statTemplate();
+    renderProducts();
+    renderAbout();
+    renderContact();
+    applyAdminState();
+    observeCards();
+  }
+
+  function statTemplate(){
+    return `
+      <div class="msr-stat"><b contenteditable="false" data-field="seller.years">${data.seller.years||''}</b><span>سال تجربه</span></div>
+      <div class="msr-stat"><b contenteditable="false" data-field="seller.pieces">${data.seller.pieces||''}</b><span>قطعه ساخته‌شده</span></div>
+      <div class="msr-stat"><b contenteditable="false" data-field="seller.students">${data.seller.students||''}</b><span>هنرجوی آموزش‌دیده</span></div>
+    `;
+  }
+  function factTemplate(){
+    return `
+      <div class="msr-fact"><b contenteditable="false" data-field="seller.years">${data.seller.years||''}</b><span>سال سابقه</span></div>
+      <div class="msr-fact"><b contenteditable="false" data-field="seller.pieces">${data.seller.pieces||''}</b><span>اثر تولید شده</span></div>
+      <div class="msr-fact"><b contenteditable="false" data-field="seller.students">${data.seller.students||''}</b><span>هنرجو</span></div>
+    `;
+  }
+
+  function syncStatDisplays(){
+    document.getElementById('msrStats').innerHTML = statTemplate();
+    document.getElementById('msrFactRow').innerHTML = factTemplate();
+    applyAdminState();
+  }
+
+  function renderProducts(){
+    const grid = document.getElementById('msrProductGrid');
+    grid.innerHTML = '';
+    (data.products || []).forEach(p=>{
+      const card = document.createElement('div');
+      card.className = 'msr-card';
+      card.innerHTML = `
+        <div class="msr-medallion" data-rotatable data-product="${p.id}">
+          <img src="${p.image}" alt="${p.name}" draggable="false">
+          <span class="msr-rot-hint">بکش تا بچرخانی</span>
+          <label class="msr-upload-label" style="display:none;">📷
+            <input type="file" accept="image/*" data-upload-product="${p.id}">
+          </label>
+        </div>
+        <span class="msr-tag">${p.tag||''}</span>
+        <h3 contenteditable="false" data-field="product.${p.id}.name">${p.name||''}</h3>
+        <div class="msr-price" contenteditable="false" data-field="product.${p.id}.price">${p.price||''}</div>
+        <div class="msr-size-row"><span class="msr-size-label">سایز:</span><span class="msr-size" contenteditable="false" data-field="product.${p.id}.size">${p.size||''}</span></div>
+        <div class="msr-desc" contenteditable="false" data-field="product.${p.id}.desc">${p.desc||''}</div>
+        <div class="msr-edit-tools" style="display:none;">
+          <button class="msr-icon-btn danger" data-remove-product="${p.id}" title="حذف">🗑</button>
+        </div>
+      `;
+      grid.appendChild(card);
+      attachRotate(card.querySelector('[data-rotatable]'));
+    });
+    if(isAdmin){
+      const addCard = document.createElement('button');
+      addCard.className = 'msr-add-card';
+      addCard.innerHTML = '<span>+</span><span>افزودن محصول جدید</span>';
+      addCard.addEventListener('click', addProduct);
+      grid.appendChild(addCard);
+    }
+  }
+
+  function renderAbout(){
+    document.getElementById('msrAboutImg').src = data.seller.avatar || '';
+    document.getElementById('msrSellerName').textContent = data.seller.name || '';
+    document.getElementById('msrSellerTitle').textContent = data.seller.title || '';
+    document.getElementById('msrBio').textContent = data.seller.bio || '';
+    document.getElementById('msrFactRow').innerHTML = factTemplate();
+  }
+
+  function renderContact(){
+    const phone = document.getElementById('msrPhoneLink');
+    phone.textContent = data.seller.phone || '';
+    phone.href = 'tel:' + (data.seller.phone ? data.seller.phone.replace(/[^\d+]/g,'') : '');
+    const email = document.getElementById('msrEmailLink');
+    email.textContent = data.seller.email || '';
+    email.href = 'mailto:' + (data.seller.email || '');
+    document.getElementById('msrInsta').textContent = data.seller.instagram || '';
+    document.getElementById('msrAddress').textContent = data.seller.address || '';
+    document.getElementById('msrHours').textContent = data.seller.hours || '';
+  }
+
+  function applyAdminState(){
+    document.getElementById('msrAdminBtn').classList.toggle('on', isAdmin);
+    document.querySelectorAll('[data-field]').forEach(el=>{
+      el.setAttribute('contenteditable', isAdmin ? 'true' : 'false');
+    });
+    document.querySelectorAll('.msr-upload-label').forEach(el=>{
+      el.style.display = isAdmin ? 'flex' : 'none';
+    });
+    document.querySelectorAll('.msr-edit-tools').forEach(el=>{
+      el.style.display = isAdmin ? 'flex' : 'none';
+    });
+  }
+
+  function attachRotate(medallion){
+    if(!medallion || medallion.dataset.rotBound) return;
+    medallion.dataset.rotBound = '1';
+    const img = medallion.querySelector('img');
+    let dragging=false, cx=0, cy=0, startAngle=0, startRot=0;
+
+    function currentRot(){
+      const m = img.style.getPropertyValue('--rot');
+      return parseFloat(m) || 0;
+    }
+    function angleAt(x,y){
+      return Math.atan2(y-cy, x-cx) * 180/Math.PI;
+    }
+    medallion.addEventListener('pointerdown', (e)=>{
+      if(e.target.closest('.msr-upload-label')) return;
+      dragging = true;
+      medallion.setPointerCapture(e.pointerId);
+      const rect = medallion.getBoundingClientRect();
+      cx = rect.left + rect.width/2;
+      cy = rect.top + rect.height/2;
+      startAngle = angleAt(e.clientX, e.clientY);
+      startRot = currentRot();
+    });
+    medallion.addEventListener('pointermove', (e)=>{
+      if(!dragging) return;
+      const a = angleAt(e.clientX, e.clientY);
+      img.style.setProperty('--rot', (startRot + (a - startAngle)) + 'deg');
+    });
+    function end(e){
+      if(!dragging) return;
+      dragging = false;
+      try{ medallion.releasePointerCapture(e.pointerId); }catch(err){}
+    }
+    medallion.addEventListener('pointerup', end);
+    medallion.addEventListener('pointercancel', end);
+  }
+
+  function attachBlobDrag(){
+    document.querySelectorAll('[data-blob]').forEach(blob=>{
+      let dragging=false, offX=0, offY=0;
+      blob.addEventListener('pointerdown', e=>{
+        dragging = true;
+        blob.setPointerCapture(e.pointerId);
+        const rect = blob.getBoundingClientRect();
+        offX = e.clientX - rect.left;
+        offY = e.clientY - rect.top;
+        blob.style.animation = 'none';
+      });
+      blob.addEventListener('pointermove', e=>{
+        if(!dragging) return;
+        blob.style.left = (e.clientX - offX) + 'px';
+        blob.style.top = (e.clientY - offY) + 'px';
+        blob.style.right = 'auto';
+        blob.style.bottom = 'auto';
+      });
+      function end(e){ dragging=false; try{blob.releasePointerCapture(e.pointerId);}catch(err){} }
+      blob.addEventListener('pointerup', end);
+      blob.addEventListener('pointercancel', end);
+    });
+  }
+
+  function bindEditableCommit(){
+    root.addEventListener('focusout', (e)=>{
+      const el = e.target.closest('[data-field]');
+      if(!el || !isAdmin) return;
+      const field = el.dataset.field;
+      let val = el.textContent.trim();
+      
+      if(field.startsWith('product.')){
+        const [, id, key] = field.split('.');
+        const prod = data.products.find(p=>p.id===id);
+        if(prod){ prod[key] = val; }
+      }else{
+        setPath(data, field, val);
+      }
+      
+      if(field==='seller.shopName'){
+        document.getElementById('msrFooterShop').textContent = val;
+      }
+      if(field==='seller.phone' || field==='seller.email'){
+        renderContact();
+      }
+      
+      // ذخیره مستقیم بدون انتظار
+      set(ref(db, 'storeData'), data)
+        .then(() => toast('تغییرات ذخیره شد'))
+        .catch(err => toast('خطا در ذخیره: ' + err.message));
+    }, true);
+  }
+
+  function resizeImage(file, maxDim, cb){
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      const img = new Image();
+      img.onload = ()=>{
+        let w=img.width, h=img.height;
+        if(w>h && w>maxDim){ h = h*(maxDim/w); w = maxDim; }
+        else if(h>maxDim){ w = w*(maxDim/h); h = maxDim; }
+        const c = document.createElement('canvas');
+        c.width=Math.round(w); c.height=Math.round(h);
+        const ctx = c.getContext('2d');
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+        ctx.drawImage(img,0,0,c.width,c.height);
+
+        let quality = 0.8;
+        let dataUrl = c.toDataURL('image/jpeg', quality);
+        cb(dataUrl);
+      };
+      img.onerror = ()=> toast('⚠ این عکس خوانده نشد');
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function bindUploads(){
+    root.addEventListener('change', (e)=>{
+      const input = e.target.closest('input[type=file]');
+      if(!input || !isAdmin) return;
+      const file = input.files[0];
+      if(!file) return;
+      toast('در حال آپلود عکس…');
+      resizeImage(file, 500, (dataUrl)=>{
+        if(input.dataset.uploadProduct){
+          const prod = data.products.find(p=>p.id===input.dataset.uploadProduct);
+          if(prod){ prod.image = dataUrl; }
+        }else if(input.dataset.uploadTarget==='avatar'){
+          data.seller.avatar = dataUrl;
+        }else if(input.dataset.uploadTarget==='hero'){
+          data.seller.heroImage = dataUrl;
+        }
+        renderProducts();
+        renderAbout();
+        document.getElementById('msrHeroImg').src = data.seller.heroImage;
+        applyAdminState();
+        saveToFirebase();
+      });
+    });
+  }
+
+  function addProduct(){
+    const id = 'p' + Date.now();
+    data.products.push({
+      id, name:'محصول جدید', price:'—', size:'—', desc:'توضیح محصول را اینجا بنویسید.',
+      tag:'جدید', hueA: Math.floor(Math.random()*360), hueB: Math.floor(Math.random()*360), image:null
+    });
+    ensureImages(data);
+    saveToFirebase();
+    renderProducts();
+    applyAdminState();
+  }
+
+  function bindRemoveProduct(){
+    root.addEventListener('click', (e)=>{
+      const btn = e.target.closest('[data-remove-product]');
+      if(!btn) return;
+      const id = btn.dataset.removeProduct;
+      data.products = data.products.filter(p=>p.id!==id);
+      saveToFirebase();
+      renderProducts();
+      applyAdminState();
+    });
+  }
+
+  function injectSellerUploadLabels(){
+    const aboutM = document.getElementById('msrAboutMedallion');
+    if(!aboutM.querySelector('.msr-upload-label')){
+      const label = document.createElement('label');
+      label.className = 'msr-upload-label';
+      label.style.display = 'none';
+      label.innerHTML = '📷<input type="file" accept="image/*" data-upload-target="avatar">';
+      aboutM.appendChild(label);
+    }
+    const heroM = document.getElementById('msrHeroMedallion');
+    if(!heroM.querySelector('.msr-upload-label')){
+      const label = document.createElement('label');
+      label.className = 'msr-upload-label';
+      label.style.display = 'none';
+      label.innerHTML = '📷<input type="file" accept="image/*" data-upload-target="hero">';
+      heroM.appendChild(label);
+    }
+  }
+
+  function navigate(page){
+    document.querySelectorAll('.msr-page').forEach(p=>p.classList.toggle('active', p.dataset.page===page));
+    document.querySelectorAll('.msr-link').forEach(l=>l.classList.toggle('active', l.dataset.nav===page));
+    document.getElementById('msrLinks').classList.remove('open');
+    window.scrollTo({top:0, behavior:'smooth'});
+    observeCards();
+  }
+  function bindNav(){
+    root.addEventListener('click', (e)=>{
+      const navBtn = e.target.closest('[data-nav]');
+      if(navBtn){ navigate(navBtn.dataset.nav); }
+    });
+    document.getElementById('msrMenuToggle').addEventListener('click', ()=>{
+      document.getElementById('msrLinks').classList.toggle('open');
+    });
+  }
+
+  let observer;
+  function observeCards(){
+    if(observer) observer.disconnect();
+    observer = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{ if(en.isIntersecting) en.target.classList.add('in-view'); });
+    }, {threshold:0.15});
+    document.querySelectorAll('.msr-card').forEach(c=>observer.observe(c));
+  }
+
+  function bindAdminLogin(){
+    const backdrop = document.getElementById('msrModalBackdrop');
+    const pinInput = document.getElementById('msrPinInput');
+    const err = document.getElementById('msrModalErr');
+    document.getElementById('msrAdminBtn').addEventListener('click', ()=>{
+      if(isAdmin){
+        isAdmin = false;
+        applyAdminState();
+        renderProducts();
+        toast('از حالت مدیر خارج شدید');
+        return;
+      }
+      err.textContent='';
+      pinInput.value='';
+      backdrop.classList.add('show');
+      setTimeout(()=>pinInput.focus(), 50);
+    });
+    document.getElementById('msrModalCancel').addEventListener('click', ()=>backdrop.classList.remove('show'));
+    backdrop.addEventListener('click', (e)=>{ if(e.target===backdrop) backdrop.classList.remove('show'); });
+    function tryLogin(){
+      if(pinInput.value === ADMIN_PIN){
+        isAdmin = true;
+        backdrop.classList.remove('show');
+        applyAdminState();
+        renderProducts();
+        injectSellerUploadLabels();
+        applyAdminState();
+        toast('به پنل مدیریت خوش آمدید');
+      }else{
+        err.textContent = 'رمز اشتباه است';
+      }
+    }
+    document.getElementById('msrModalOk').addEventListener('click', tryLogin);
+    pinInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter') tryLogin(); });
+  }
+
+  function bindGlazeMouse(){
+    window.addEventListener('pointermove', (e)=>{
+      const mx = (e.clientX/window.innerWidth*100).toFixed(1)+'%';
+      const my = (e.clientY/window.innerHeight*100).toFixed(1)+'%';
+      root.style.setProperty('--mx', mx);
+      root.style.setProperty('--my', my);
+    });
+  }
+
+  function init(){
+    listenToFirebase();
+    injectSellerUploadLabels();
+    bindNav();
+    bindEditableCommit();
+    bindUploads();
+    bindRemoveProduct();
+    bindAdminLogin();
+    bindGlazeMouse();
+    attachBlobDrag();
+    attachRotate(document.getElementById('msrHeroMedallion'));
+    attachRotate(document.getElementById('msrAboutMedallion'));
+    navigate('home');
+  }
+  init();
+</script>
+</body>
+</html>
