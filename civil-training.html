@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دفتر آموزش عمران — پذیرش، مشاوره و آموزش تخصصی</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy-deep:#081A2E;
+  --navy:#0E2A47;
+  --navy-soft:#173A5E;
+  --blue-line:#7FA8C9;
+  --blue-line-dim:rgba(127,168,201,0.28);
+  --paper:#EDF1F0;
+  --paper-2:#E3E9E7;
+  --ink:#0B1B2B;
+  --ink-soft:#3E5266;
+  --accent:#E4572E;
+  --accent-dim:#c94a24;
+  --brass:#C9A15A;
+  --white:#FDFDFB;
+  --radius:2px;
+  --font-display:'Vazirmatn',Tahoma,sans-serif;
+  --font-body:'Vazirmatn',Tahoma,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+}
+body{
+  font-family:var(--font-body);
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.75;
+  overflow-x:hidden;
+}
+img,svg{display:block;max-width:100%;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;}
+input,textarea,select{font-family:inherit;}
+::selection{background:var(--accent);color:var(--white);}
+
+.eyebrow{
+  font-family:var(--font-mono);
+  font-size:0.72rem;
+  letter-spacing:0.14em;
+  color:var(--accent);
+  text-transform:uppercase;
+  display:flex;align-items:center;gap:8px;
+  margin-bottom:14px;
+}
+.eyebrow::before{content:"";width:22px;height:1px;background:var(--accent);display:inline-block;}
+
+h1,h2,h3{font-family:var(--font-display);font-weight:800;letter-spacing:-0.01em;}
+.section-title{font-size:clamp(1.6rem,3.2vw,2.4rem);margin-bottom:10px;color:var(--navy-deep);}
+.section-sub{color:var(--ink-soft);max-width:640px;font-size:1rem;margin-bottom:44px;}
+.dark .section-title{color:var(--white);}
+.dark .section-sub{color:var(--blue-line);}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+section{position:relative;padding:100px 0;}
+
+/* ---------- blueprint grid backgrounds ---------- */
+.bp-grid{
+  position:relative;
+  background-color:var(--navy);
+  background-image:
+    repeating-linear-gradient(0deg, var(--blue-line-dim) 0 1px, transparent 1px 88px),
+    repeating-linear-gradient(90deg, var(--blue-line-dim) 0 1px, transparent 1px 88px),
+    repeating-linear-gradient(0deg, rgba(127,168,201,0.12) 0 1px, transparent 1px 22px),
+    repeating-linear-gradient(90deg, rgba(127,168,201,0.12) 0 1px, transparent 1px 22px);
+  color:var(--white);
+}
+.paper-grid{
+  background-color:var(--paper);
+  background-image: radial-gradient(circle, rgba(11,27,43,0.09) 1px, transparent 1px);
+  background-size:26px 26px;
+}
+.paper-alt{background-color:var(--paper-2);}
+
+/* corner marks — recurring drafting-frame motif */
+.frame{position:relative;}
+.frame::before,.frame::after,.frame .c2::before,.frame .c2::after{content:"";position:absolute;width:14px;height:14px;border-color:var(--accent);}
+.frame::before{top:0;right:0;border-top:2px solid;border-right:2px solid;}
+.frame::after{bottom:0;left:0;border-bottom:2px solid;border-left:2px solid;}
+
+/* dimension divider */
+.dim-divider{display:flex;align-items:center;gap:10px;margin:0 0 40px;color:var(--brass);}
+.dim-divider .tick{width:1px;height:14px;background:var(--brass);}
+.dim-divider .line{flex:1;height:1px;background:var(--brass);opacity:0.5;}
+.dim-divider span{font-family:var(--font-mono);font-size:0.72rem;letter-spacing:0.08em;white-space:nowrap;}
+
+/* ---------- header ---------- */
+header{
+  position:fixed;top:0;right:0;left:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 28px;
+  transition:background .35s ease, padding .35s ease, box-shadow .35s ease;
+}
+header.scrolled{
+  background:rgba(8,26,46,0.86);
+  backdrop-filter:blur(10px);
+  padding:12px 28px;
+  box-shadow:0 8px 30px rgba(0,0,0,0.25);
+}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:800;color:var(--white);font-size:1.05rem;}
+.brand .mark{width:30px;height:30px;flex-shrink:0;}
+.brand .mark path{stroke:var(--accent);}
+nav{display:flex;align-items:center;gap:30px;}
+nav a{color:var(--blue-line);font-size:0.92rem;position:relative;padding:4px 0;transition:color .2s;}
+nav a:hover{color:var(--white);}
+nav a::after{content:"";position:absolute;bottom:0;right:0;width:0;height:1px;background:var(--accent);transition:width .25s;}
+nav a:hover::after{width:100%;}
+.nav-cta{
+  font-family:var(--font-mono);font-size:0.78rem;letter-spacing:0.04em;
+  color:var(--navy-deep) !important;background:var(--brass);
+  padding:9px 18px;border-radius:var(--radius);
+}
+.nav-cta::after{display:none;}
+.nav-cta:hover{background:#dab672;color:var(--navy-deep) !important;}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;}
+.hamburger span{width:24px;height:2px;background:var(--white);}
+
+/* ---------- hero ---------- */
+#hero{
+  min-height:100vh;display:flex;align-items:center;padding-top:120px;padding-bottom:60px;
+}
+.hero-grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:50px;align-items:center;width:100%;}
+.hero-copy h1{font-size:clamp(2.2rem,4.6vw,3.6rem);color:var(--white);line-height:1.28;margin-bottom:22px;}
+.hero-copy h1 em{font-style:normal;color:var(--accent);}
+.hero-copy p{color:var(--blue-line);font-size:1.05rem;max-width:520px;margin-bottom:34px;}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:46px;}
+.btn{
+  font-family:var(--font-mono);font-size:0.85rem;letter-spacing:0.03em;
+  padding:14px 26px;border-radius:var(--radius);display:inline-flex;align-items:center;gap:10px;
+  transition:transform .2s, box-shadow .2s, background .2s;
+}
+.btn-primary{background:var(--accent);color:var(--white);}
+.btn-primary:hover{background:var(--accent-dim);transform:translateY(-2px);box-shadow:0 10px 26px rgba(228,87,46,0.35);}
+.btn-outline{border:1px solid var(--blue-line);color:var(--white);}
+.btn-outline:hover{border-color:var(--white);background:rgba(255,255,255,0.06);transform:translateY(-2px);}
+.hero-stats{display:flex;gap:36px;flex-wrap:wrap;}
+.hero-stats .stat{border-right:2px solid var(--accent);padding-right:14px;}
+.hero-stats .num{font-family:var(--font-mono);font-size:1.5rem;color:var(--white);font-weight:700;}
+.hero-stats .lbl{font-size:0.8rem;color:var(--blue-line);margin-top:2px;}
+
+.hero-art{position:relative;}
+.hero-art svg{width:100%;height:auto;}
+.hero-art .draw{stroke-dasharray:1400;stroke-dashoffset:1400;animation:draw 2.4s ease forwards;}
+.hero-art .draw2{stroke-dasharray:600;stroke-dashoffset:600;animation:draw 1.8s ease forwards;animation-delay:.5s;}
+.hero-art .fade{opacity:0;animation:fadeIn 1s ease forwards;animation-delay:1.6s;}
+@keyframes draw{to{stroke-dashoffset:0;}}
+@keyframes fadeIn{to{opacity:1;}}
+.dim-label{font-family:var(--font-mono);font-size:11px;fill:var(--brass);}
+
+/* ---------- reveal on scroll ---------- */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease, transform .7s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+.reveal-stagger > *{opacity:0;transform:translateY(24px);transition:opacity .6s ease, transform .6s ease;}
+.reveal-stagger.in > *{opacity:1;transform:translateY(0);}
+.reveal-stagger.in > *:nth-child(1){transition-delay:.05s;}
+.reveal-stagger.in > *:nth-child(2){transition-delay:.14s;}
+.reveal-stagger.in > *:nth-child(3){transition-delay:.23s;}
+.reveal-stagger.in > *:nth-child(4){transition-delay:.32s;}
+.reveal-stagger.in > *:nth-child(5){transition-delay:.41s;}
+.reveal-stagger.in > *:nth-child(6){transition-delay:.5s;}
+
+/* ---------- about ---------- */
+#about .about-grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:60px;align-items:start;}
+.portrait{position:relative;background:var(--navy);aspect-ratio:3/4;overflow:hidden;}
+.portrait .frame::before,.portrait .frame::after{border-color:var(--brass);}
+.portrait-fill{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--blue-line);font-family:var(--font-mono);font-size:0.8rem;text-align:center;padding:20px;}
+.portrait-fill svg{width:64px;height:64px;opacity:.5;margin-bottom:14px;}
+.about-body h3{font-size:1.5rem;color:var(--navy-deep);margin-bottom:6px;}
+.about-role{font-family:var(--font-mono);color:var(--accent);font-size:0.85rem;margin-bottom:22px;display:block;}
+.about-text{color:var(--ink-soft);font-size:1rem;margin-bottom:26px;white-space:pre-line;}
+.tag-row{display:flex;flex-wrap:wrap;gap:10px;}
+.tag{
+  font-family:var(--font-mono);font-size:0.76rem;padding:7px 14px;border:1px solid var(--navy-soft);color:var(--navy);
+  border-radius:var(--radius);
+}
+
+/* ---------- courses ---------- */
+.course-cols{display:grid;grid-template-columns:1fr 1fr;gap:40px;}
+.course-col{background:var(--white);border:1px solid #d7ddd9;padding:30px 26px;position:relative;}
+.course-col h3{font-size:1.1rem;color:var(--navy-deep);margin-bottom:4px;}
+.course-col .stage-tag{font-family:var(--font-mono);font-size:0.72rem;color:var(--accent);letter-spacing:.06em;display:block;margin-bottom:20px;}
+.course-list{list-style:none;}
+.course-list li{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:12px 0;border-bottom:1px dashed #cfd6d2;font-size:0.94rem;color:var(--ink);
+}
+.course-list li:last-child{border-bottom:none;}
+.course-list li .rm{display:none;color:var(--accent);font-family:var(--font-mono);font-size:0.75rem;flex-shrink:0;}
+.admin-mode .course-list li .rm{display:inline-block;}
+.add-row{display:none;gap:8px;margin-top:16px;}
+.admin-mode .add-row{display:flex;}
+.add-row input{flex:1;border:1px solid #cfd6d2;padding:9px 12px;font-size:0.85rem;background:var(--paper);}
+.add-row button{font-family:var(--font-mono);font-size:0.75rem;background:var(--navy);color:var(--white);padding:0 14px;}
+
+/* ---------- software ---------- */
+.soft-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.soft-card{
+  background:var(--navy);position:relative;padding:26px 22px;overflow:hidden;
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.soft-card::before,.soft-card::after{content:"";position:absolute;width:12px;height:12px;border-color:var(--brass);}
+.soft-card::before{top:8px;right:8px;border-top:1.5px solid;border-right:1.5px solid;}
+.soft-card::after{bottom:8px;left:8px;border-bottom:1.5px solid;border-left:1.5px solid;}
+.soft-card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(8,26,46,0.35);}
+.soft-name{font-family:var(--font-mono);font-weight:700;color:var(--white);font-size:1.02rem;letter-spacing:.03em;margin-bottom:10px;}
+.soft-desc{color:var(--blue-line);font-size:0.86rem;}
+.soft-card .rm{display:none;position:absolute;top:10px;left:10px;color:var(--accent);font-family:var(--font-mono);font-size:0.7rem;}
+.admin-mode .soft-card .rm{display:block;}
+.soft-add{display:none;background:transparent;border:1px dashed var(--blue-line);align-items:center;justify-content:center;color:var(--blue-line);font-family:var(--font-mono);font-size:0.85rem;min-height:130px;}
+.admin-mode .soft-add{display:flex;}
+
+/* ---------- forms ---------- */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;}
+.form-card{background:var(--navy-soft);padding:34px 30px;position:relative;}
+.form-card h3{color:var(--white);font-size:1.15rem;margin-bottom:6px;}
+.form-card .form-sub{color:var(--blue-line);font-size:0.88rem;margin-bottom:24px;}
+.field{margin-bottom:18px;}
+.field label{display:block;font-family:var(--font-mono);font-size:0.72rem;color:var(--brass);letter-spacing:.06em;margin-bottom:8px;}
+.field input,.field select,.field textarea{
+  width:100%;background:rgba(255,255,255,0.04);border:none;border-bottom:1px solid var(--blue-line-dim);
+  color:var(--white);padding:10px 4px;font-size:0.94rem;outline:none;transition:border-color .2s;
+}
+.field input::placeholder,.field textarea::placeholder{color:rgba(127,168,201,0.55);}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);}
+.field textarea{resize:vertical;min-height:80px;}
+.field select option{color:#000;}
+.form-submit{width:100%;justify-content:center;margin-top:8px;}
+.form-note{font-size:0.75rem;color:var(--blue-line);margin-top:14px;}
+
+/* ---------- footer ---------- */
+footer{background:var(--navy-deep);color:var(--blue-line);padding:60px 0 30px;}
+.footer-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:40px;margin-bottom:40px;}
+.footer-brand{color:var(--white);font-family:var(--font-display);font-weight:800;margin-bottom:10px;}
+.footer-col h4{font-family:var(--font-mono);font-size:0.78rem;color:var(--brass);letter-spacing:.06em;margin-bottom:14px;}
+.footer-col a,.footer-col p{display:block;font-size:0.88rem;color:var(--blue-line);margin-bottom:8px;}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(127,168,201,0.15);padding-top:22px;font-size:0.78rem;flex-wrap:wrap;gap:12px;}
+.admin-entry{display:flex;align-items:center;gap:8px;color:rgba(127,168,201,0.6);font-family:var(--font-mono);font-size:0.72rem;transition:color .2s;}
+.admin-entry:hover{color:var(--brass);}
+
+/* ---------- admin modal ---------- */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(8,17,29,0.72);backdrop-filter:blur(4px);
+  display:flex;align-items:center;justify-content:center;z-index:500;opacity:0;pointer-events:none;transition:opacity .25s;
+}
+.modal-overlay.open{opacity:1;pointer-events:auto;}
+.modal{
+  background:var(--navy);width:min(400px,90vw);padding:36px 32px;position:relative;
+  transform:translateY(14px) scale(.97);transition:transform .25s;
+}
+.modal-overlay.open .modal{transform:translateY(0) scale(1);}
+.modal h3{color:var(--white);font-size:1.1rem;margin-bottom:6px;}
+.modal p{color:var(--blue-line);font-size:0.85rem;margin-bottom:24px;}
+.modal .close-x{position:absolute;top:16px;left:16px;color:var(--blue-line);font-size:1.2rem;}
+.code-row{display:flex;gap:8px;justify-content:center;margin-bottom:20px;direction:ltr;}
+.code-row input{
+  width:44px;height:54px;text-align:center;font-family:var(--font-mono);font-size:1.3rem;color:var(--white);
+  background:rgba(255,255,255,0.05);border:1px solid var(--blue-line-dim);border-radius:var(--radius);outline:none;
+}
+.code-row input:focus{border-color:var(--accent);}
+.modal-error{color:var(--accent);font-size:0.8rem;text-align:center;margin-bottom:10px;min-height:16px;}
+.modal .btn{width:100%;justify-content:center;}
+
+/* ---------- admin dashboard ---------- */
+#admin-dash{display:none;}
+.admin-mode #admin-dash{display:block;}
+.dash-tabs{display:flex;gap:10px;margin-bottom:30px;}
+.dash-tab{
+  font-family:var(--font-mono);font-size:0.8rem;padding:10px 18px;color:var(--blue-line);
+  border:1px solid var(--blue-line-dim);border-radius:var(--radius);
+}
+.dash-tab.active{background:var(--accent);color:var(--white);border-color:var(--accent);}
+.dash-panel{display:none;}
+.dash-panel.active{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;}
+.entry-card{background:var(--navy-soft);padding:20px 20px;position:relative;}
+.entry-card .row{display:flex;justify-content:space-between;font-size:0.86rem;color:var(--blue-line);margin-bottom:6px;}
+.entry-card .row b{color:var(--white);font-weight:600;}
+.entry-card .msg{font-size:0.84rem;color:var(--white);margin-top:10px;padding-top:10px;border-top:1px dashed var(--blue-line-dim);}
+.entry-card .del{position:absolute;top:14px;left:14px;color:var(--accent);font-family:var(--font-mono);font-size:0.7rem;}
+.empty-state{color:var(--blue-line);font-family:var(--font-mono);font-size:0.85rem;grid-column:1/-1;padding:30px 0;text-align:center;}
+.dash-code{display:flex;gap:10px;align-items:center;margin-top:30px;padding-top:26px;border-top:1px solid var(--blue-line-dim);}
+.dash-code input{width:140px;background:rgba(255,255,255,0.05);border:1px solid var(--blue-line-dim);color:var(--white);padding:9px 12px;font-family:var(--font-mono);letter-spacing:.1em;}
+.dash-code button{font-family:var(--font-mono);font-size:0.75rem;background:var(--brass);color:var(--navy-deep);padding:9px 16px;}
+
+/* ---------- editable ---------- */
+[contenteditable="true"]{outline:1px dashed transparent;transition:outline-color .2s;border-radius:2px;}
+.admin-mode [contenteditable="true"]:hover{outline-color:var(--accent);}
+.admin-mode [contenteditable="true"]:focus{outline:1px dashed var(--accent);background:rgba(228,87,46,0.06);}
+.save-bar{display:none;align-items:center;gap:12px;margin-top:22px;}
+.admin-mode .save-bar{display:flex;}
+.save-bar button{font-family:var(--font-mono);font-size:0.78rem;background:var(--accent);color:var(--white);padding:9px 18px;border-radius:var(--radius);}
+.save-bar .saved-ok{color:var(--brass);font-size:0.78rem;opacity:0;transition:opacity .3s;}
+.save-bar .saved-ok.show{opacity:1;}
+
+/* ---------- toast ---------- */
+#toast-container{position:fixed;bottom:26px;left:26px;z-index:600;display:flex;flex-direction:column;gap:10px;}
+.toast{
+  background:var(--navy-deep);border-right:3px solid var(--accent);color:var(--white);padding:14px 20px;
+  font-size:0.86rem;box-shadow:0 12px 30px rgba(0,0,0,0.3);
+  transform:translateX(-30px);opacity:0;transition:transform .3s, opacity .3s;
+  max-width:300px;
+}
+.toast.show{transform:translateX(0);opacity:1;}
+
+/* ---------- responsive ---------- */
+@media (max-width:960px){
+  nav{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--navy-deep);flex-direction:column;justify-content:center;
+    transform:translateY(-100%);transition:transform .3s;padding:0;gap:26px;}
+  nav.open{transform:translateY(0);}
+  .hamburger{display:flex;}
+  .hero-grid,#about .about-grid,.form-grid{grid-template-columns:1fr;}
+  .course-cols{grid-template-columns:1fr;}
+  .soft-grid{grid-template-columns:repeat(2,1fr);}
+  .footer-grid{grid-template-columns:1fr;}
+}
+@media (max-width:560px){
+  .soft-grid{grid-template-columns:1fr;}
+  section{padding:70px 0;}
+}
+</style>
+</head>
+<body>
+
+<header id="site-header">
+  <a href="#hero" class="brand">
+    <svg class="mark" viewBox="0 0 30 30" fill="none"><path d="M4 26V10L15 4L26 10V26" stroke-width="2" stroke-linejoin="round"/><path d="M10 26V16H20V26" stroke-width="2"/></svg>
+    <span id="brand-name">دفتر عمران</span>
+  </a>
+  <button class="hamburger" id="hamburger" aria-label="منو"><span></span><span></span><span></span></button>
+  <nav id="main-nav">
+    <a href="#about">درباره من</a>
+    <a href="#courses">دروس</a>
+    <a href="#software">نرم‌افزارها</a>
+    <a href="#consult">مشاوره</a>
+    <a href="#enroll" class="nav-cta">ثبت‌نام دانش‌آموز</a>
+  </nav>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section id="hero" class="bp-grid">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <div class="eyebrow">آموزش تخصصی مهندسی عمران</div>
+      <h1 id="hero-title" contenteditable="false">از نیمکت دبیرستان تا <em>طراحی سازه</em> — مسیر عمران را با نقشه پیش برو</h1>
+      <p id="hero-desc" contenteditable="false">تدریس خصوصی ریاضی و فیزیک دبیرستان، دروس تخصصی مهندسی عمران در دانشگاه، و آموزش کاربردی نرم‌افزارهای سازه‌ای — با مشاوره مسیر تحصیلی و شغلی.</p>
+      <div class="hero-actions">
+        <a href="#enroll" class="btn btn-primary">ثبت‌نام دانش‌آموز</a>
+        <a href="#consult" class="btn btn-outline">درخواست مشاوره رایگان</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="num">+8</div><div class="lbl">سال تجربه تدریس</div></div>
+        <div class="stat"><div class="num">+300</div><div class="lbl">دانش‌آموز و دانشجو</div></div>
+        <div class="stat"><div class="num">6</div><div class="lbl">نرم‌افزار تخصصی سازه</div></div>
+      </div>
+    </div>
+    <div class="hero-art">
+      <svg viewBox="0 0 480 460" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path class="draw" d="M60 420 H420" stroke="var(--brass)" stroke-width="2"/>
+        <path class="draw" d="M90 420 V140 M180 420 V100 M270 420 V100 M360 420 V140" stroke="var(--blue-line)" stroke-width="2"/>
+        <path class="draw" d="M90 140 H360 M90 260 H360" stroke="var(--blue-line)" stroke-width="2"/>
+        <path class="draw2" d="M90 260 L180 100 M180 260 L270 100 M270 260 L360 140" stroke="var(--accent)" stroke-width="2"/>
+        <path class="draw2" d="M70 100 H100 M70 100 V130" stroke="var(--brass)" stroke-width="1.5"/>
+        <g class="fade">
+          <circle cx="90" cy="140" r="3.5" fill="var(--accent)"/>
+          <circle cx="180" cy="100" r="3.5" fill="var(--accent)"/>
+          <circle cx="270" cy="100" r="3.5" fill="var(--accent)"/>
+          <circle cx="360" cy="140" r="3.5" fill="var(--accent)"/>
+          <text x="95" y="435" class="dim-label">A</text>
+          <text x="185" y="435" class="dim-label">B</text>
+          <text x="275" y="435" class="dim-label">C</text>
+          <text x="365" y="435" class="dim-label">D</text>
+          <text x="400" y="130" class="dim-label">h = 3.20</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="paper-grid">
+  <div class="wrap">
+    <div class="eyebrow reveal">درباره من</div>
+    <div class="about-grid">
+      <div class="portrait frame reveal">
+        <div class="c2"></div>
+        <div class="portrait-fill">
+          <div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+            جای عکس پروفایل — از پنل مدیریت قابل جایگزینی است
+          </div>
+        </div>
+      </div>
+      <div class="about-body reveal">
+        <h3 id="about-name" contenteditable="false">مهندس آرمان رستمی</h3>
+        <span class="about-role" id="about-role" contenteditable="false">مدرس خصوصی ریاضی، فیزیک و دروس تخصصی مهندسی عمران</span>
+        <p class="about-text" id="about-text" contenteditable="false">چند سال است در کنار فعالیت در حوزه طراحی سازه، به آموزش خصوصی دروس دبیرستان تا دانشگاه در رشته عمران می‌پردازم. روش تدریس بر پایه‌ی تحلیل مفهومی و حل مسئله‌ی واقعی است، نه صرفاً مرور فرمول. در کنار دروس نظری، آموزش کاربردی نرم‌افزارهای سازه‌ای مثل ایتبس، سیف و سپ۲۰۰۰ را هم ارائه می‌دهم تا دانشجو آماده‌ی محیط کار واقعی باشد.</p>
+        <div class="tag-row" id="about-tags">
+          <span class="tag">تحلیل و طراحی سازه</span>
+          <span class="tag">مکانیک خاک و پی</span>
+          <span class="tag">مشاوره کنکور و ارشد</span>
+          <span class="tag">آموزش نرم‌افزار تخصصی</span>
+        </div>
+        <div class="save-bar" data-section="about">
+          <button class="btn btn-primary save-btn">ذخیره تغییرات بخش درباره من</button>
+          <span class="saved-ok">ذخیره شد ✓</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COURSES -->
+<section id="courses" class="paper-alt">
+  <div class="wrap">
+    <div class="eyebrow reveal">مسیر آموزشی</div>
+    <h2 class="section-title reveal">دروس، از دبیرستان تا دانشگاه</h2>
+    <p class="section-sub reveal">مسیر آموزشی به ترتیب مقطع تحصیلی چیده شده تا روند پیشرفت مشخص باشد.</p>
+    <div class="dim-divider reveal"><span>۰۱ — دبیرستان</span><span class="line"></span><span>۰۲ — دانشگاه</span></div>
+    <div class="course-cols reveal-stagger">
+      <div class="course-col frame">
+        <div class="c2"></div>
+        <h3>دبیرستان</h3>
+        <span class="stage-tag">پایه دهم تا دوازدهم</span>
+        <ul class="course-list" id="list-highschool">
+          <li><span>ریاضی دهم، یازدهم و دوازدهم</span><span class="rm" data-list="highschool">حذف</span></li>
+          <li><span>فیزیک دهم، یازدهم و دوازدهم</span><span class="rm" data-list="highschool">حذف</span></li>
+          <li><span>هندسه</span><span class="rm" data-list="highschool">حذف</span></li>
+          <li><span>حسابان</span><span class="rm" data-list="highschool">حذف</span></li>
+          <li><span>آمادگی کنکور سراسری</span><span class="rm" data-list="highschool">حذف</span></li>
+        </ul>
+        <div class="add-row"><input type="text" placeholder="عنوان درس جدید" data-add="highschool"><button data-addbtn="highschool">افزودن</button></div>
+      </div>
+      <div class="course-col frame">
+        <div class="c2"></div>
+        <h3>دانشگاه — مهندسی عمران</h3>
+        <span class="stage-tag">کارشناسی و کارشناسی ارشد</span>
+        <ul class="course-list" id="list-university">
+          <li><span>استاتیک و مقاومت مصالح</span><span class="rm" data-list="university">حذف</span></li>
+          <li><span>تحلیل سازه‌های ۱ و ۲</span><span class="rm" data-list="university">حذف</span></li>
+          <li><span>طراحی سازه‌های بتنی و فولادی</span><span class="rm" data-list="university">حذف</span></li>
+          <li><span>مکانیک خاک و مهندسی پی</span><span class="rm" data-list="university">حذف</span></li>
+          <li><span>دینامیک سازه</span><span class="rm" data-list="university">حذف</span></li>
+          <li><span>هیدرولیک و نقشه‌برداری</span><span class="rm" data-list="university">حذف</span></li>
+        </ul>
+        <div class="add-row"><input type="text" placeholder="عنوان درس جدید" data-add="university"><button data-addbtn="university">افزودن</button></div>
+      </div>
+    </div>
+    <div class="save-bar" data-section="courses">
+      <button class="btn btn-primary save-btn">ذخیره لیست دروس</button>
+      <span class="saved-ok">ذخیره شد ✓</span>
+    </div>
+  </div>
+</section>
+
+<!-- SOFTWARE -->
+<section id="software" class="bp-grid">
+  <div class="wrap">
+    <div class="eyebrow reveal">مهارت‌های نرم‌افزاری</div>
+    <h2 class="section-title reveal">نرم‌افزارهای تخصصی سازه</h2>
+    <p class="section-sub reveal">آموزش کاربردی همراه با پروژه‌ی واقعی، برای ورود آماده به بازار کار.</p>
+    <div class="soft-grid reveal-stagger" id="soft-grid">
+      <div class="soft-card"><span class="rm" data-soft-rm>حذف</span><div class="soft-name">ETABS</div><div class="soft-desc">مدل‌سازی و تحلیل سه‌بعدی سازه‌های ساختمانی</div></div>
+      <div class="soft-card"><span class="rm" data-soft-rm>حذف</span><div class="soft-name">SAP2000</div><div class="soft-desc">تحلیل عمومی سازه‌ها و پل‌ها</div></div>
+      <div class="soft-card"><span class="rm" data-soft-rm>حذف</span><div class="soft-name">SAFE</div><div class="soft-desc">طراحی دال و فونداسیون بتنی</div></div>
+      <div class="soft-card"><span class="rm" data-soft-rm>حذف</span><div class="soft-name">AutoCAD</div><div class="soft-desc">نقشه‌کشی و تهیه نقشه‌های اجرایی</div></div>
+      <div class="soft-card"><span class="rm" data-soft-rm>حذف</span><div class="soft-name">Revit Structure</div><div class="soft-desc">مدل‌سازی اطلاعات ساختمان (BIM)</div></div>
+      <div class="soft-card"><span class="rm" data-soft-rm>حذف</span><div class="soft-name">RAM</div><div class="soft-desc">طراحی سازه‌های فولادی و بتنی</div></div>
+      <button class="soft-add" id="soft-add-btn">+ افزودن نرم‌افزار</button>
+    </div>
+    <div class="save-bar" data-section="software">
+      <button class="btn btn-primary save-btn">ذخیره لیست نرم‌افزارها</button>
+      <span class="saved-ok">ذخیره شد ✓</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONSULT + ENROLL -->
+<section id="consult" class="paper-grid">
+  <div class="wrap">
+    <div class="eyebrow reveal">همکاری</div>
+    <h2 class="section-title reveal">مشاوره بگیرید یا ثبت‌نام کنید</h2>
+    <p class="section-sub reveal">فرم مربوطه را پر کنید؛ در اسرع وقت پاسخ داده می‌شود.</p>
+    <div class="form-grid">
+      <div class="form-card frame reveal" id="enroll">
+        <div class="c2"></div>
+        <h3>ثبت‌نام دانش‌آموز / دانشجو</h3>
+        <p class="form-sub">اطلاعات خود را برای شروع دوره وارد کنید.</p>
+        <form id="enroll-form">
+          <div class="field"><label>نام و نام خانوادگی</label><input type="text" required placeholder="مثال: علی محمدی" name="name"></div>
+          <div class="field"><label>شماره تماس</label><input type="tel" required placeholder="09xxxxxxxxx" name="phone" pattern="[0-9]{10,11}"></div>
+          <div class="field"><label>مقطع تحصیلی</label>
+            <select name="grade" required>
+              <option value="">انتخاب کنید</option>
+              <option>دبیرستان — پایه دهم</option>
+              <option>دبیرستان — پایه یازدهم</option>
+              <option>دبیرستان — پایه دوازدهم</option>
+              <option>دانشجوی کارشناسی عمران</option>
+              <option>داوطلب کارشناسی ارشد</option>
+            </select>
+          </div>
+          <div class="field"><label>درس یا دوره مورد نظر</label><input type="text" placeholder="مثال: تحلیل سازه ۱، یا آموزش ایتبس" name="course"></div>
+          <div class="field"><label>توضیحات (اختیاری)</label><textarea placeholder="هر نکته‌ای که کمک می‌کند..." name="message"></textarea></div>
+          <button type="submit" class="btn btn-primary form-submit">ثبت‌نام</button>
+          <p class="form-note">اطلاعات شما فقط برای هماهنگی کلاس استفاده می‌شود.</p>
+        </form>
+      </div>
+      <div class="form-card frame reveal">
+        <div class="c2"></div>
+        <h3>درخواست مشاوره</h3>
+        <p class="form-sub">مسیر تحصیلی یا شغلی خود را مشورت بگیرید.</p>
+        <form id="consult-form">
+          <div class="field"><label>نام و نام خانوادگی</label><input type="text" required placeholder="مثال: سارا احمدی" name="name"></div>
+          <div class="field"><label>شماره تماس</label><input type="tel" required placeholder="09xxxxxxxxx" name="phone" pattern="[0-9]{10,11}"></div>
+          <div class="field"><label>موضوع مشاوره</label>
+            <select name="topic" required>
+              <option value="">انتخاب کنید</option>
+              <option>انتخاب رشته و دانشگاه</option>
+              <option>مسیر کارشناسی ارشد</option>
+              <option>برنامه‌ریزی درسی</option>
+              <option>مسیر شغلی مهندسی عمران</option>
+              <option>سایر</option>
+            </select>
+          </div>
+          <div class="field"><label>پیام شما</label><textarea placeholder="سوال یا موضوع مورد نظر را بنویسید..." name="message"></textarea></div>
+          <button type="submit" class="btn btn-primary form-submit">ارسال درخواست مشاوره</button>
+          <p class="form-note">پاسخ معمولاً طی ۲۴ ساعت کاری ارسال می‌شود.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ADMIN DASHBOARD -->
+<section id="admin-dash" class="bp-grid">
+  <div class="wrap">
+    <div class="eyebrow">پنل مدیریت</div>
+    <h2 class="section-title">درخواست‌های ثبت‌شده</h2>
+    <div class="dash-tabs">
+      <button class="dash-tab active" data-tab="students">ثبت‌نام‌ها</button>
+      <button class="dash-tab" data-tab="consults">درخواست‌های مشاوره</button>
+    </div>
+    <div class="dash-panel active" id="panel-students"></div>
+    <div class="dash-panel" id="panel-consults"></div>
+    <div class="dash-code">
+      <span style="font-family:var(--font-mono);font-size:0.8rem;color:var(--blue-line);">تغییر کد دسترسی (۶ رقم):</span>
+      <input type="text" id="new-code" maxlength="6" inputmode="numeric" placeholder="------">
+      <button id="change-code-btn">ذخیره کد جدید</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">دفتر آموزش عمران</div>
+        <p>آموزش خصوصی دروس دبیرستان تا دانشگاه در رشته مهندسی عمران، همراه با مشاوره تحصیلی و آموزش نرم‌افزارهای سازه‌ای.</p>
+      </div>
+      <div class="footer-col">
+        <h4>دسترسی سریع</h4>
+        <a href="#courses">دروس</a>
+        <a href="#software">نرم‌افزارها</a>
+        <a href="#consult">مشاوره</a>
+        <a href="#enroll">ثبت‌نام</a>
+      </div>
+      <div class="footer-col">
+        <h4>ارتباط</h4>
+        <p>شماره تماس: در پنل مدیریت وارد کنید</p>
+        <p>ایمیل: در پنل مدیریت وارد کنید</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> — تمامی حقوق محفوظ است.</span>
+      <button class="admin-entry" id="admin-open">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+        دسترسی مدیریت
+      </button>
+    </div>
+  </div>
+</footer>
+
+<!-- ADMIN LOGIN MODAL -->
+<div class="modal-overlay" id="admin-overlay">
+  <div class="modal frame">
+    <div class="c2"></div>
+    <button class="close-x" id="admin-close">×</button>
+    <h3>ورود به پنل مدیریت</h3>
+    <p>کد ۶ رقمی دسترسی را وارد کنید.</p>
+    <div class="code-row" id="code-row">
+      <input type="text" maxlength="1" inputmode="numeric">
+      <input type="text" maxlength="1" inputmode="numeric">
+      <input type="text" maxlength="1" inputmode="numeric">
+      <input type="text" maxlength="1" inputmode="numeric">
+      <input type="text" maxlength="1" inputmode="numeric">
+      <input type="text" maxlength="1" inputmode="numeric">
+    </div>
+    <div class="modal-error" id="modal-error"></div>
+    <button class="btn btn-primary" id="modal-submit">ورود</button>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script>
+(function(){
+  "use strict";
+  document.getElementById('year').textContent = new jalaliOrGregorianYear();
+  function jalaliOrGregorianYear(){ return new Date().getFullYear(); }
+
+  var isAdmin = false;
+  var DEFAULT_CODE = "112233";
+
+  /* ---------------- utilities ---------------- */
+  function toast(msg){
+    var c = document.getElementById('toast-container');
+    var t = document.createElement('div');
+    t.className = 'toast';
+    t.textContent = msg;
+    c.appendChild(t);
+    requestAnimationFrame(function(){ t.classList.add('show'); });
+    setTimeout(function(){
+      t.classList.remove('show');
+      setTimeout(function(){ t.remove(); }, 300);
+    }, 3200);
+  }
+
+  async function storeGet(key, shared){
+    try{
+      var res = await window.storage.get(key, !!shared);
+      return res ? res.value : null;
+    }catch(e){ return null; }
+  }
+  async function storeSet(key, value, shared){
+    try{
+      var res = await window.storage.set(key, value, !!shared);
+      return !!res;
+    }catch(e){ return false; }
+  }
+  async function storeDelete(key, shared){
+    try{ await window.storage.delete(key, !!shared); return true; }catch(e){ return false; }
+  }
+  async function storeList(prefix, shared){
+    try{
+      var res = await window.storage.list(prefix, !!shared);
+      return res ? res.keys : [];
+    }catch(e){ return []; }
+  }
+
+  /* ---------------- scroll reveal ---------------- */
+  var revealEls = document.querySelectorAll('.reveal, .reveal-stagger');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  }, {threshold:0.15});
+  revealEls.forEach(function(el){ io.observe(el); });
+
+  /* ---------------- header scroll state ---------------- */
+  var header = document.getElementById('site-header');
+  window.addEventListener('scroll', function(){
+    header.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  /* ---------------- mobile nav ---------------- */
+  var hamburger = document.getElementById('hamburger');
+  var mainNav = document.getElementById('main-nav');
+  hamburger.addEventListener('click', function(){ mainNav.classList.toggle('open'); });
+  mainNav.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){ mainNav.classList.remove('open'); });
+  });
+
+  /* ---------------- content load/save ---------------- */
+  var defaults = {
+    hero: {
+      title: document.getElementById('hero-title').innerText,
+      desc: document.getElementById('hero-desc').innerText
+    },
+    about: {
+      name: document.getElementById('about-name').innerText,
+      role: document.getElementById('about-role').innerText,
+      text: document.getElementById('about-text').innerText
+    },
+    courses: {
+      highschool: Array.from(document.querySelectorAll('#list-highschool li span:first-child')).map(function(s){return s.textContent;}),
+      university: Array.from(document.querySelectorAll('#list-university li span:first-child')).map(function(s){return s.textContent;})
+    },
+    software: Array.from(document.querySelectorAll('#soft-grid .soft-card')).map(function(c){
+      return {name:c.querySelector('.soft-name').textContent, desc:c.querySelector('.soft-desc').textContent};
+    }),
+    brand: document.getElementById('brand-name').textContent
+  };
+
+  function renderCourseList(id, items){
+    var ul = document.getElementById(id);
+    ul.innerHTML = '';
+    var listKey = id === 'list-highschool' ? 'highschool' : 'university';
+    items.forEach(function(txt){
+      var li = document.createElement('li');
+      var span = document.createElement('span');
+      span.textContent = txt;
+      var rm = document.createElement('span');
+      rm.className = 'rm';
+      rm.textContent = 'حذف';
+      rm.setAttribute('data-list', listKey);
+      li.appendChild(span); li.appendChild(rm);
+      ul.appendChild(li);
+    });
+  }
+
+  function renderSoftware(items){
+    var grid = document.getElementById('soft-grid');
+    var addBtn = document.getElementById('soft-add-btn');
+    grid.querySelectorAll('.soft-card').forEach(function(c){ c.remove(); });
+    items.forEach(function(it){
+      var card = document.createElement('div');
+      card.className = 'soft-card';
+      card.innerHTML = '<span class="rm" data-soft-rm>حذف</span><div class="soft-name"></div><div class="soft-desc"></div>';
+      card.querySelector('.soft-name').textContent = it.name;
+      card.querySelector('.soft-desc').textContent = it.desc;
+      grid.insertBefore(card, addBtn);
+    });
+  }
+
+  async function loadAllContent(){
+    var hero = await storeGet('content:hero', true);
+    if(hero){ hero = JSON.parse(hero); document.getElementById('hero-title').innerText = hero.title; document.getElementById('hero-desc').innerText = hero.desc; }
+    else { await storeSet('content:hero', JSON.stringify(defaults.hero), true); }
+
+    var about = await storeGet('content:about', true);
+    if(about){ about = JSON.parse(about); document.getElementById('about-name').innerText = about.name; document.getElementById('about-role').innerText = about.role; document.getElementById('about-text').innerText = about.text; }
+    else { await storeSet('content:about', JSON.stringify(defaults.about), true); }
+
+    var courses = await storeGet('content:courses', true);
+    if(courses){ courses = JSON.parse(courses); renderCourseList('list-highschool', courses.highschool); renderCourseList('list-university', courses.university); }
+    else { await storeSet('content:courses', JSON.stringify(defaults.courses), true); }
+
+    var software = await storeGet('content:software', true);
+    if(software){ software = JSON.parse(software); renderSoftware(software); }
+    else { await storeSet('content:software', JSON.stringify(defaults.software), true); }
+
+    var brand = await storeGet('content:brand', true);
+    if(brand){ document.getElementById('brand-name').textContent = brand; }
+    else { await storeSet('content:brand', defaults.brand, true); }
+
+    bindDynamicHandlers();
+  }
+
+  /* ---------------- editable toggling ---------------- */
+  function setEditable(state){
+    ['hero-title','hero-desc','about-name','about-role','about-text'].forEach(function(id){
+      document.getElementById(id).setAttribute('contenteditable', state ? 'true' : 'false');
+    });
+  }
+
+  /* ---------------- save handlers ---------------- */
+  document.body.addEventListener('click', async function(e){
+    var btn = e.target.closest('.save-btn');
+    if(!btn) return;
+    var bar = btn.closest('.save-bar');
+    var section = bar.getAttribute('data-section');
+    var ok = false;
+    if(section === 'about'){
+      var data = {
+        name: document.getElementById('about-name').innerText.trim(),
+        role: document.getElementById('about-role').innerText.trim(),
+        text: document.getElementById('about-text').innerText.trim()
+      };
+      ok = await storeSet('content:about', JSON.stringify(data), true);
+    } else if(section === 'courses'){
+      var data2 = {
+        highschool: Array.from(document.querySelectorAll('#list-highschool li span:first-child')).map(function(s){return s.textContent;}),
+        university: Array.from(document.querySelectorAll('#list-university li span:first-child')).map(function(s){return s.textContent;})
+      };
+      ok = await storeSet('content:courses', JSON.stringify(data2), true);
+    } else if(section === 'software'){
+      var data3 = Array.from(document.querySelectorAll('#soft-grid .soft-card')).map(function(c){
+        return {name:c.querySelector('.soft-name').textContent, desc:c.querySelector('.soft-desc').textContent};
+      });
+      ok = await storeSet('content:software', JSON.stringify(data3), true);
+    }
+    var okLabel = bar.querySelector('.saved-ok');
+    if(ok){ okLabel.classList.add('show'); toast('تغییرات ذخیره شد.'); }
+    else { toast('خطا در ذخیره‌سازی. دوباره تلاش کنید.'); }
+    setTimeout(function(){ okLabel.classList.remove('show'); }, 2200);
+  });
+
+  // hero save on blur (auto, since no dedicated save bar in hero)
+  ['hero-title','hero-desc'].forEach(function(id){
+    document.getElementById(id).addEventListener('blur', async function(){
+      if(!isAdmin) return;
+      var data = { title: document.getElementById('hero-title').innerText.trim(), desc: document.getElementById('hero-desc').innerText.trim() };
+      var ok = await storeSet('content:hero', JSON.stringify(data), true);
+      if(ok) toast('عنوان صفحه اصلی ذخیره شد.');
+    });
+  });
+
+  /* ---------------- dynamic list handlers (rebind after re-render) ---------------- */
+  function bindDynamicHandlers(){
+    document.body.onclick = document.body.onclick || null; // placeholder, real delegation below is global
+  }
+
+  // remove course item
+  document.body.addEventListener('click', function(e){
+    var rm = e.target.closest('.course-list .rm');
+    if(rm && isAdmin){
+      rm.closest('li').remove();
+    }
+  });
+
+  // add course item
+  document.body.addEventListener('click', function(e){
+    var btn = e.target.closest('[data-addbtn]');
+    if(!btn) return;
+    var key = btn.getAttribute('data-addbtn');
+    var input = document.querySelector('input[data-add="'+key+'"]');
+    var val = input.value.trim();
+    if(!val) return;
+    var ul = document.getElementById(key === 'highschool' ? 'list-highschool' : 'list-university');
+    var li = document.createElement('li');
+    li.innerHTML = '<span></span><span class="rm" data-list="'+key+'">حذف</span>';
+    li.querySelector('span').textContent = val;
+    ul.appendChild(li);
+    input.value = '';
+  });
+
+  // remove software card
+  document.body.addEventListener('click', function(e){
+    var rm = e.target.closest('[data-soft-rm]');
+    if(rm && isAdmin){ rm.closest('.soft-card').remove(); }
+  });
+
+  // add software card
+  document.getElementById('soft-add-btn').addEventListener('click', function(){
+    var name = prompt('نام نرم‌افزار:');
+    if(!name) return;
+    var desc = prompt('توضیح کوتاه:') || '';
+    var card = document.createElement('div');
+    card.className = 'soft-card';
+    card.innerHTML = '<span class="rm" data-soft-rm>حذف</span><div class="soft-name"></div><div class="soft-desc"></div>';
+    card.querySelector('.soft-name').textContent = name;
+    card.querySelector('.soft-desc').textContent = desc;
+    document.getElementById('soft-grid').insertBefore(card, document.getElementById('soft-add-btn'));
+  });
+
+  /* ---------------- forms ---------------- */
+  function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,8); }
+
+  document.getElementById('enroll-form').addEventListener('submit', async function(e){
+    e.preventDefault();
+    var f = e.target;
+    var entry = {
+      id: uid(),
+      name: f.name.value.trim(),
+      phone: f.phone.value.trim(),
+      grade: f.grade.value,
+      course: f.course.value.trim(),
+      message: f.message.value.trim(),
+      date: new Date().toLocaleString('fa-IR')
+    };
+    var submitBtn = f.querySelector('button[type=submit]');
+    submitBtn.disabled = true; submitBtn.textContent = 'در حال ثبت...';
+    var ok = await storeSet('students:' + entry.id, JSON.stringify(entry), true);
+    submitBtn.disabled = false; submitBtn.textContent = 'ثبت‌نام';
+    if(ok){ toast('ثبت‌نام شما با موفقیت ثبت شد.'); f.reset(); }
+    else { toast('خطایی پیش آمد. دوباره تلاش کنید.'); }
+  });
+
+  document.getElementById('consult-form').addEventListener('submit', async function(e){
+    e.preventDefault();
+    var f = e.target;
+    var entry = {
+      id: uid(),
+      name: f.name.value.trim(),
+      phone: f.phone.value.trim(),
+      topic: f.topic.value,
+      message: f.message.value.trim(),
+      date: new Date().toLocaleString('fa-IR')
+    };
+    var submitBtn = f.querySelector('button[type=submit]');
+    submitBtn.disabled = true; submitBtn.textContent = 'در حال ارسال...';
+    var ok = await storeSet('consults:' + entry.id, JSON.stringify(entry), true);
+    submitBtn.disabled = false; submitBtn.textContent = 'ارسال درخواست مشاوره';
+    if(ok){ toast('درخواست مشاوره شما ارسال شد.'); f.reset(); }
+    else { toast('خطایی پیش آمد. دوباره تلاش کنید.'); }
+  });
+
+  /* ---------------- admin login modal ---------------- */
+  var overlay = document.getElementById('admin-overlay');
+  var codeInputs = Array.from(document.querySelectorAll('#code-row input'));
+  var modalError = document.getElementById('modal-error');
+
+  function openModal(){
+    overlay.classList.add('open');
+    codeInputs.forEach(function(i){ i.value=''; });
+    modalError.textContent = '';
+    codeInputs[0].focus();
+  }
+  function closeModal(){ overlay.classList.remove('open'); }
+
+  document.getElementById('admin-open').addEventListener('click', openModal);
+  document.getElementById('admin-close').addEventListener('click', closeModal);
+  overlay.addEventListener('click', function(e){ if(e.target === overlay) closeModal(); });
+
+  codeInputs.forEach(function(input, idx){
+    input.addEventListener('input', function(){
+      input.value = input.value.replace(/[^0-9]/g,'').slice(0,1);
+      if(input.value && idx < codeInputs.length - 1){ codeInputs[idx+1].focus(); }
+      if(idx === codeInputs.length - 1 && input.value){ trySubmitCode(); }
+    });
+    input.addEventListener('keydown', function(e){
+      if(e.key === 'Backspace' && !input.value && idx > 0){ codeInputs[idx-1].focus(); }
+    });
+  });
+
+  document.getElementById('modal-submit').addEventListener('click', trySubmitCode);
+
+  async function trySubmitCode(){
+    var code = codeInputs.map(function(i){ return i.value; }).join('');
+    if(code.length !== 6){ modalError.textContent = 'کد ۶ رقمی را کامل وارد کنید.'; return; }
+    var cfg = await storeGet('site-config', true);
+    var adminCode = DEFAULT_CODE;
+    if(cfg){ try{ adminCode = JSON.parse(cfg).adminCode || DEFAULT_CODE; }catch(e){} }
+    else { await storeSet('site-config', JSON.stringify({adminCode: DEFAULT_CODE}), true); }
+
+    if(code === adminCode){
+      isAdmin = true;
+      document.body.classList.add('admin-mode');
+      setEditable(true);
+      closeModal();
+      toast('به پنل مدیریت خوش آمدید.');
+      loadDashboard();
+      document.getElementById('admin-dash').scrollIntoView({behavior:'smooth'});
+    } else {
+      modalError.textContent = 'کد وارد شده صحیح نیست.';
+      codeInputs.forEach(function(i){ i.value=''; });
+      codeInputs[0].focus();
+    }
+  }
+
+  /* ---------------- admin dashboard ---------------- */
+  var dashTabs = document.querySelectorAll('.dash-tab');
+  dashTabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      dashTabs.forEach(function(t){ t.classList.remove('active'); });
+      tab.classList.add('active');
+      document.querySelectorAll('.dash-panel').forEach(function(p){ p.classList.remove('active'); });
+      document.getElementById('panel-' + tab.getAttribute('data-tab')).classList.add('active');
+    });
+  });
+
+  function entryCard(data, storeKey, fields){
+    var card = document.createElement('div');
+    card.className = 'entry-card';
+    var html = '<span class="del">حذف</span>';
+    fields.forEach(function(f){
+      html += '<div class="row"><span>' + f.label + '</span><b>' + (data[f.key] || '—') + '</b></div>';
+    });
+    if(data.message){ html += '<div class="msg">' + data.message + '</div>'; }
+    card.innerHTML = html;
+    card.querySelector('.del').addEventListener('click', async function(){
+      await storeDelete(storeKey, true);
+      card.remove();
+      toast('مورد حذف شد.');
+    });
+    return card;
+  }
+
+  async function loadDashboard(){
+    var studentsPanel = document.getElementById('panel-students');
+    var consultsPanel = document.getElementById('panel-consults');
+    studentsPanel.innerHTML = '<div class="empty-state">در حال بارگذاری...</div>';
+    consultsPanel.innerHTML = '<div class="empty-state">در حال بارگذاری...</div>';
+
+    var studentKeys = await storeList('students:', true);
+    studentsPanel.innerHTML = '';
+    if(!studentKeys.length){ studentsPanel.innerHTML = '<div class="empty-state">هنوز ثبت‌نامی وجود ندارد.</div>'; }
+    for(var i=0;i<studentKeys.length;i++){
+      var raw = await storeGet(studentKeys[i], true);
+      if(!raw) continue;
+      var d = JSON.parse(raw);
+      studentsPanel.appendChild(entryCard(d, studentKeys[i], [
+        {label:'نام', key:'name'}, {label:'تماس', key:'phone'}, {label:'مقطع', key:'grade'}, {label:'درس', key:'course'}, {label:'تاریخ', key:'date'}
+      ]));
+    }
+
+    var consultKeys = await storeList('consults:', true);
+    consultsPanel.innerHTML = '';
+    if(!consultKeys.length){ consultsPanel.innerHTML = '<div class="empty-state">هنوز درخواست مشاوره‌ای وجود ندارد.</div>'; }
+    for(var j=0;j<consultKeys.length;j++){
+      var raw2 = await storeGet(consultKeys[j], true);
+      if(!raw2) continue;
+      var d2 = JSON.parse(raw2);
+      consultsPanel.appendChild(entryCard(d2, consultKeys[j], [
+        {label:'نام', key:'name'}, {label:'تماس', key:'phone'}, {label:'موضوع', key:'topic'}, {label:'تاریخ', key:'date'}
+      ]));
+    }
+  }
+
+  document.getElementById('change-code-btn').addEventListener('click', async function(){
+    var val = document.getElementById('new-code').value.trim();
+    if(!/^[0-9]{6}$/.test(val)){ toast('کد باید دقیقاً ۶ رقم باشد.'); return; }
+    var ok = await storeSet('site-config', JSON.stringify({adminCode: val}), true);
+    if(ok){ toast('کد دسترسی جدید ذخیره شد.'); document.getElementById('new-code').value=''; }
+    else { toast('خطا در ذخیره کد جدید.'); }
+  });
+
+  /* ---------------- init ---------------- */
+  loadAllContent();
+})();
+</script>
+</body>
+</html>

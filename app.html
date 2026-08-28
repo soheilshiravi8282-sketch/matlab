@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>پنل اجرا | SimuPlate Studio Pro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.32.0/plotly.min.js"></script>
+<style>
+:root{
+  --bg-0:#060a13; --bg-1:#0b1120; --bg-2:#111a2e;
+  --panel:#0e1526; --panel-brd:#1e2a44;
+  --text-0:#eef2fb; --text-1:#aab6ce; --text-2:#6b7896;
+  --accent:#00d4ff; --accent-2:#5b8dff; --hot:#ff8a3d; --hot-2:#ffcf3d; --ok:#3ddc97; --danger:#ff6161;
+  --serif:'Vazirmatn',sans-serif; --mono:'JetBrains Mono', monospace;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{
+  font-family:var(--serif); background:var(--bg-0); color:var(--text-0); min-height:100vh;
+  background-image:
+    radial-gradient(ellipse 900px 500px at 15% -10%, rgba(0,120,200,.18), transparent 60%),
+    linear-gradient(rgba(90,140,255,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(90,140,255,.06) 1px, transparent 1px);
+  background-size:auto, 42px 42px, 42px 42px;
+}
+a{color:inherit; text-decoration:none;}
+.wrap{max-width:1280px; margin:0 auto; padding:0 24px;}
+
+header{position:sticky; top:0; z-index:50; backdrop-filter:blur(14px); background:rgba(6,10,19,.8); border-bottom:1px solid var(--panel-brd);}
+nav{display:flex; align-items:center; justify-content:space-between; padding:16px 24px; max-width:1280px; margin:0 auto;}
+.logo{display:flex; align-items:center; gap:10px; font-weight:800; font-size:16px;}
+.logo-mark{width:30px; height:30px; border-radius:8px; position:relative; flex-shrink:0;
+  background:conic-gradient(from 220deg,#00d4ff,#5b8dff,#ff8a3d,#ffcf3d,#00d4ff); box-shadow:0 0 18px -3px rgba(0,212,255,.7);}
+.logo-mark::after{content:''; position:absolute; inset:5px; border-radius:5px; background:var(--bg-0);}
+.back-link{font-size:13px; color:var(--text-1); display:flex; align-items:center; gap:6px;}
+.back-link:hover{color:var(--accent);}
+.badge-live{font-family:var(--mono); font-size:11px; color:var(--ok); border:1px solid rgba(61,220,151,.3); background:rgba(61,220,151,.08); padding:5px 12px; border-radius:999px; display:flex; align-items:center; gap:6px;}
+.badge-live i{width:6px; height:6px; border-radius:50%; background:var(--ok); display:inline-block; animation:pulse 1.6s infinite;}
+@keyframes pulse{0%,100%{opacity:1;} 50%{opacity:.3;}}
+
+/* ===== SITE SWITCHER ===== */
+.switcher-wrap{position:relative;}
+.switcher-btn{
+  width:36px; height:36px; border-radius:10px; border:1px solid var(--panel-brd);
+  background:rgba(255,255,255,.02); display:flex; align-items:center; justify-content:center;
+  cursor:pointer; transition:.2s all; flex-shrink:0;
+}
+.switcher-btn:hover{border-color:var(--accent); background:rgba(0,212,255,.08);}
+.switcher-btn svg{width:17px; height:17px; color:var(--text-1);}
+.switcher-btn:hover svg{color:var(--accent);}
+.switcher-panel{
+  position:absolute; top:48px; left:0; width:300px; background:var(--panel);
+  border:1px solid var(--panel-brd); border-radius:16px; padding:14px;
+  box-shadow:0 30px 70px -20px rgba(0,0,0,.75); z-index:150;
+  display:none; grid-template-columns:1fr 1fr; gap:8px;
+}
+.switcher-panel.open{display:grid;}
+.switcher-title{grid-column:1/-1; font-family:var(--mono); font-size:10.5px; letter-spacing:.08em; color:var(--text-2); text-transform:uppercase; padding:4px 6px 10px;}
+.switcher-item{
+  display:flex; flex-direction:column; align-items:center; gap:7px; text-align:center;
+  padding:12px 6px; border-radius:12px; border:1px solid transparent; transition:.2s all; text-decoration:none;
+}
+.switcher-item:hover{background:rgba(255,255,255,.04); border-color:var(--panel-brd);}
+.switcher-item.active{border-color:var(--accent); background:rgba(0,212,255,.07);}
+.switcher-icon{width:34px; height:34px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:15px; background:rgba(255,255,255,.05);}
+.switcher-item span{font-size:11px; color:var(--text-1); line-height:1.4;}
+.switcher-item.active span{color:var(--text-0); font-weight:600;}
+
+.page-head{padding:36px 0 8px;}
+.page-head .eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); display:flex; align-items:center; gap:10px;}
+.page-head .eyebrow::before{content:''; width:20px; height:1px; background:var(--accent);}
+.page-head h1{font-size:26px; font-weight:800; margin-top:10px;}
+.page-head p{color:var(--text-1); font-size:14px; margin-top:8px; max-width:640px; line-height:1.85;}
+
+.layout{display:grid; grid-template-columns:360px 1fr; gap:20px; padding:26px 0 60px;}
+@media(max-width:960px){ .layout{grid-template-columns:1fr;} }
+
+.card{background:var(--panel); border:1px solid var(--panel-brd); border-radius:16px; padding:20px; margin-bottom:16px;}
+.card h3{font-size:13px; color:var(--text-1); font-weight:700; margin-bottom:14px; display:flex; align-items:center; gap:8px; font-family:var(--mono); letter-spacing:.02em;}
+.card h3::before{content:''; width:3px; height:13px; background:var(--accent); border-radius:2px;}
+
+.row{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;}
+label{font-size:11.5px; color:var(--text-2); display:block; margin-bottom:5px; font-family:var(--mono);}
+input, select{width:100%; background:var(--bg-1); border:1px solid var(--panel-brd); color:var(--text-0); padding:10px 12px; border-radius:9px; font-size:13.5px; font-family:var(--serif); outline:none; transition:.2s border-color;}
+input:focus, select:focus{border-color:var(--accent);}
+
+.btn{display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:13px 18px; border-radius:11px; font-weight:700; font-size:14px; cursor:pointer; border:1px solid transparent; transition:.2s all;}
+.btn-primary{background:linear-gradient(135deg, var(--accent), var(--accent-2)); color:#03101c; box-shadow:0 8px 26px -8px rgba(0,212,255,.55); margin-top:8px;}
+.btn-primary:hover:not(:disabled){transform:translateY(-2px);}
+.btn-primary:disabled{opacity:.45; cursor:not-allowed; transform:none;}
+.btn-hot{background:linear-gradient(135deg, var(--hot), var(--hot-2)); color:#1c0f00; box-shadow:0 8px 26px -8px rgba(255,138,61,.5);}
+.btn-hot:hover{transform:translateY(-2px);}
+
+#statusBox{font-size:12.5px; margin-top:12px; padding:12px; border-radius:10px; background:var(--bg-1); color:var(--text-1); border:1px solid var(--panel-brd); line-height:1.7;}
+.status-ok{border-color:rgba(61,220,151,.4) !important; color:var(--ok) !important;}
+.status-err{border-color:rgba(255,97,97,.4) !important; color:var(--danger) !important;}
+
+.steps{list-style:none; counter-reset:step; margin-top:6px;}
+.steps li{counter-increment:step; font-size:12.5px; color:var(--text-1); padding:8px 0 8px 0; padding-right:30px; position:relative; line-height:1.7; border-top:1px solid var(--panel-brd);}
+.steps li:first-child{border-top:none;}
+.steps li::before{content:counter(step); position:absolute; right:0; top:8px; width:19px; height:19px; border-radius:6px; background:rgba(0,212,255,.12); color:var(--accent); font-family:var(--mono); font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center;}
+.steps code{font-family:var(--mono); background:var(--bg-2); padding:2px 6px; border-radius:4px; color:var(--accent); font-size:11.5px;}
+
+#plot{width:100%; height:520px; background:var(--bg-1); border-radius:14px;}
+#report{width:100%; height:190px; background:#050810; color:#8be6c2; font-family:var(--mono); font-size:12px; border:1px solid var(--panel-brd); border-radius:10px; padding:14px; white-space:pre-wrap; overflow:auto; line-height:1.6;}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="index.html" class="logo">
+      <div class="logo-mark"></div>
+      SimuPlate Studio Pro
+    </a>
+    <div class="switcher-wrap">
+      <div class="switcher-btn" onclick="toggleSwitcher()" title="سایت‌های دیگر هلدینگ">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+      </div>
+      <div class="switcher-panel" id="switcherPanel">
+        <div class="switcher-title">سایت‌های گروه ما</div>
+        <a class="switcher-item active" href="index.html">
+          <div class="switcher-icon" style="color:var(--accent);">⌬</div>
+          <span>SimuPlate<br>تحلیل کامپوزیت</span>
+        </a>
+        <a class="switcher-item" href="holding.html">
+          <div class="switcher-icon" style="color:var(--hot);">🏗</div>
+          <span>هلدینگ ساختمانی</span>
+        </a>
+        <a class="switcher-item" href="handicrafts.html">
+          <div class="switcher-icon" style="color:var(--hot-2);">🧵</div>
+          <span>صنایع دستی</span>
+        </a>
+        <a class="switcher-item" href="civil-training.html">
+          <div class="switcher-icon" style="color:var(--ok);">🏛</div>
+          <span>آموزش نرم‌افزار عمران</span>
+        </a>
+        <a class="switcher-item" href="tutor.html">
+          <div class="switcher-icon" style="color:var(--accent-2);">🎓</div>
+          <span>معلم خصوصی</span>
+        </a>
+        <a class="switcher-item" href="map3d.html">
+          <div class="switcher-icon" style="color:var(--accent);">🗺</div>
+          <span>نقشه سه‌بعدی</span>
+        </a>
+      </div>
+    </div>
+    <a href="index.html" class="back-link">→ بازگشت به سایت اصلی</a>
+    <div class="badge-live"><i></i> اتصال زنده به MATLAB</div>
+  </nav>
+</header>
+
+<script>
+function toggleSwitcher(){
+  document.getElementById('switcherPanel').classList.toggle('open');
+}
+document.addEventListener('click', (e) => {
+  const wrap = document.querySelector('.switcher-wrap');
+  if(wrap && !wrap.contains(e.target)){
+    document.getElementById('switcherPanel').classList.remove('open');
+  }
+});
+</script>
+
+<main class="wrap">
+  <div class="page-head">
+    <div class="eyebrow">پنل اجرای واقعی</div>
+    <h1>تحلیل واقعی FEM — مستقیم روی موتور MATLAB خودت</h1>
+    <p>این صفحه از طریق یک پوشه‌ی اشتراکی به نمونه‌ی MATLAB نصب‌شده روی سیستم تو وصل می‌شود و نتیجه‌ی واقعی حل‌گر <code style="font-family:var(--mono); color:var(--accent);">PlateSolver</code> را برمی‌گرداند — نه یک شبیه‌سازی بصری.</p>
+  </div>
+
+  <div class="layout">
+    <div>
+      <div class="card">
+        <h3>۰ · اتصال</h3>
+        <button class="btn btn-hot" id="pickFolderBtn">📁 انتخاب پوشه‌ی اشتراکی</button>
+        <div id="statusBox">هنوز وصل نشده. مراحل کنار را دنبال کن.</div>
+        <ul class="steps">
+          <li>در MATLAB به پوشه‌ی پروژه برو و <code>bridge_watcher</code> را اجرا کن</li>
+          <li>همین‌جا همان پوشه را با دکمه‌ی بالا انتخاب کن</li>
+          <li>مرورگر Chrome یا Edge لازم است</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>۱ · هندسه و مش</h3>
+        <div class="row">
+          <div><label>طول a (m)</label><input id="a" type="number" value="1.0" step="0.1"></div>
+          <div><label>عرض b (m)</label><input id="b" type="number" value="1.0" step="0.1"></div>
+        </div>
+        <div class="row">
+          <div><label>ضخامت h (m)</label><input id="h" type="number" value="0.02" step="0.001"></div>
+          <div><label>تعداد مش</label><input id="mesh" type="number" value="20" step="1"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>۲ · خواص ماده</h3>
+        <div class="row">
+          <div><label>E1 (GPa)</label><input id="E1" type="number" value="70.0" step="0.5"></div>
+          <div><label>E2 (GPa)</label><input id="E2" type="number" value="70.0" step="0.5"></div>
+        </div>
+        <div class="row">
+          <div><label>Nu12</label><input id="nu12" type="number" value="0.33" step="0.01"></div>
+          <div><label>G12 (GPa)</label><input id="G12" type="number" value="26.0" step="0.5"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>۳ · شرایط مرزی</h3>
+        <label>نوع تکیه‌گاه</label>
+        <select id="bc">
+          <option value="SS">SS — تکیه‌گاه ساده</option>
+          <option value="CC">CC — گیردار کامل</option>
+          <option value="SCSC">SCSC</option>
+          <option value="CFFF">CFFF — کنسول</option>
+        </select>
+        <button class="btn btn-primary" id="runBtn" disabled>▶ اجرای تحلیل در MATLAB</button>
+      </div>
+    </div>
+
+    <div>
+      <div class="card">
+        <h3>رندرینگ سه‌بعدی میدان خیز واقعی</h3>
+        <div id="plot"></div>
+      </div>
+      <div class="card">
+        <h3>گزارش فنی</h3>
+        <div id="report">برای مشاهده‌ی گزارش، ابتدا پوشه را وصل کن و تحلیل را اجرا کن.</div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+let dirHandle = null;
+const statusBox = document.getElementById('statusBox');
+const runBtn = document.getElementById('runBtn');
+
+function setStatus(msg, kind){
+  statusBox.textContent = msg;
+  statusBox.classList.remove('status-ok','status-err');
+  if(kind === 'ok') statusBox.classList.add('status-ok');
+  if(kind === 'err') statusBox.classList.add('status-err');
+}
+
+document.getElementById('pickFolderBtn').addEventListener('click', async () => {
+  try{
+    if(!window.showDirectoryPicker){
+      setStatus('مرورگرت از این قابلیت پشتیبانی نمی‌کند. از Chrome یا Edge استفاده کن.', 'err');
+      return;
+    }
+    dirHandle = await window.showDirectoryPicker();
+    const perm = await dirHandle.requestPermission({ mode:'readwrite' });
+    if(perm !== 'granted'){
+      setStatus('اجازه‌ی خواندن/نوشتن داده نشد.', 'err');
+      return;
+    }
+    setStatus('✔ وصل شد: ' + dirHandle.name + ' — مطمئن شو bridge_watcher.m روی همین پوشه در حال اجراست.', 'ok');
+    runBtn.disabled = false;
+  }catch(err){
+    setStatus('انتخاب پوشه لغو شد: ' + err.message, 'err');
+  }
+});
+
+async function writeFile(name, content){
+  const fh = await dirHandle.getFileHandle(name, { create:true });
+  const w = await fh.createWritable();
+  await w.write(content);
+  await w.close();
+}
+async function readFileIfExists(name){
+  try{
+    const fh = await dirHandle.getFileHandle(name);
+    const file = await fh.getFile();
+    return await file.text();
+  }catch(e){ return null; }
+}
+async function deleteFileIfExists(name){
+  try{ await dirHandle.removeEntry(name); }catch(e){}
+}
+
+runBtn.addEventListener('click', async () => {
+  const params = {
+    a: parseFloat(document.getElementById('a').value),
+    b: parseFloat(document.getElementById('b').value),
+    h: parseFloat(document.getElementById('h').value),
+    mesh: parseInt(document.getElementById('mesh').value),
+    E1: parseFloat(document.getElementById('E1').value),
+    E2: parseFloat(document.getElementById('E2').value),
+    nu12: parseFloat(document.getElementById('nu12').value),
+    G12: parseFloat(document.getElementById('G12').value),
+    bc: document.getElementById('bc').value
+  };
+
+  runBtn.disabled = true;
+  setStatus('⏱ در حال ارسال درخواست به MATLAB...');
+  await deleteFileIfExists('response.json');
+  await writeFile('request.json', JSON.stringify(params));
+
+  let tries = 0;
+  const maxTries = 150;
+  const poll = setInterval(async () => {
+    tries++;
+    const text = await readFileIfExists('response.json');
+    if(text){
+      clearInterval(poll);
+      runBtn.disabled = false;
+      try{
+        const result = JSON.parse(text);
+        if(result.status === 'error'){
+          setStatus('✖ خطای MATLAB: ' + result.message, 'err');
+          return;
+        }
+        setStatus('✔ تحلیل با موفقیت انجام شد.', 'ok');
+        renderResult(result);
+      }catch(e){
+        setStatus('✖ خطا در خواندن پاسخ: ' + e.message, 'err');
+      }
+    } else if(tries >= maxTries){
+      clearInterval(poll);
+      runBtn.disabled = false;
+      setStatus('⏱ پاسخی از MATLAB دریافت نشد. مطمئن شو bridge_watcher.m در حال اجراست.', 'err');
+    }
+  }, 400);
+});
+
+function renderResult(result){
+  const data = [{
+    type:'surface', x:result.X, y:result.Y, z:result.W,
+    colorscale:'Viridis', contours:{ z:{ show:true, usecolormap:true, project:{z:true} } }
+  }];
+  const layout = {
+    paper_bgcolor:'#0b1120', plot_bgcolor:'#0b1120', font:{color:'#eef2fb'},
+    margin:{l:0,r:0,t:10,b:0},
+    scene:{
+      xaxis:{title:'X (m)', color:'#6b7896'},
+      yaxis:{title:'Y (m)', color:'#6b7896'},
+      zaxis:{title:'w (m)', color:'#6b7896'}
+    }
+  };
+  Plotly.newPlot('plot', data, layout, {responsive:true});
+
+  document.getElementById('report').textContent =
+`=========================================================================
+               گزارش فنی تحلیل ورق کامپوزیت
+=========================================================================
+شرایط مرزی فعال:            ${result.bc}
+ضریب بی‌بعد خیز (C_FE):      ${result.C_FE.toFixed(6)}
+سفتی خمشی ورق (D):           ${result.D.toExponential(4)} N.m
+حداکثر خیز (w_max):          ${result.wmax.toExponential(6)} m  (${(result.wmax*1000).toFixed(4)} mm)
+=========================================================================`;
+}
+</script>
+</body>
+</html>

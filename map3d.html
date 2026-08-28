@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>نقشه‌ی سه‌بعدی خمینی‌شهر — یک ایده</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0f1a;
+    --bg-panel:#111a2b;
+    --bg-panel-2:#0d1522;
+    --line:#22304a;
+    --turquoise:#2bc4d4;
+    --turquoise-dim:#1a8d99;
+    --amber:#e3944a;
+    --amber-dim:#a8672f;
+    --green:#4f9370;
+    --ink:#eef1f7;
+    --muted:#8b97ae;
+    --muted-2:#5d6a82;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Vazirmatn', sans-serif;
+    overflow-x:hidden;
+    line-height:1.8;
+  }
+  ::selection{ background:var(--turquoise-dim); color:#fff; }
+
+  .noise{
+    position:fixed; inset:0; pointer-events:none; z-index:1; opacity:.035; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- nav ---------- */
+  nav{
+    position:fixed; top:0; right:0; left:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px clamp(20px,5vw,64px);
+    background:linear-gradient(to bottom, rgba(10,15,26,.9), transparent);
+    backdrop-filter:blur(2px);
+  }
+  .brand{ display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.5px; font-size:15px;}
+  .brand .dot{ width:8px; height:8px; border-radius:50%; background:var(--turquoise); box-shadow:0 0 12px var(--turquoise);}
+  nav .links{ display:flex; gap:28px; font-size:14px; color:var(--muted); }
+  nav .links a{ color:var(--muted); text-decoration:none; transition:color .25s; }
+  nav .links a:hover{ color:var(--ink); }
+  @media (max-width:720px){ nav .links{ display:none; } }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative; min-height:100svh; display:flex; flex-direction:column; justify-content:flex-end;
+    padding:0 0 0 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 30% 0%, rgba(43,196,212,.10), transparent 60%),
+      radial-gradient(ellipse 60% 50% at 85% 20%, rgba(227,148,74,.08), transparent 60%),
+      var(--bg);
+  }
+  #scene-wrap{
+    position:absolute; inset:0; z-index:2;
+  }
+  #scene{ width:100%; height:100%; display:block; cursor:grab; touch-action:none; }
+  #scene:active{ cursor:grabbing; }
+
+  .hero-copy{
+    position:relative; z-index:5; padding:clamp(96px,16vh,150px) clamp(20px,6vw,64px) 0;
+    pointer-events:none; display:flex;
+  }
+  .login-card{
+    pointer-events:auto; max-width:420px; width:100%;
+    background:rgba(13,20,34,.82); border:1px solid var(--line); border-radius:20px;
+    padding:28px 26px 24px; backdrop-filter:blur(14px);
+    box-shadow:0 30px 70px -24px rgba(0,0,0,.65);
+  }
+  .login-head{
+    display:flex; align-items:center; gap:10px; font-weight:700; font-size:15.5px; margin-bottom:22px;
+  }
+  .login-head .dot{ width:8px; height:8px; border-radius:50%; background:var(--turquoise); box-shadow:0 0 12px var(--turquoise); flex:none;}
+  .login-tabs{
+    display:flex; gap:6px; background:var(--bg-panel-2); padding:4px; border-radius:12px; margin-bottom:20px;
+  }
+  .ltab{
+    flex:1; font-family:inherit; font-size:12.5px; padding:10px 6px; border-radius:9px; border:none;
+    background:transparent; color:var(--muted); cursor:pointer; transition:background .2s, color .2s;
+  }
+  .ltab.active{ background:var(--bg-panel); color:var(--ink); }
+  .login-panel label{ display:block; font-size:12.5px; color:var(--muted); margin-bottom:8px; }
+  .login-panel input[type="text"]{
+    width:100%; background:var(--bg-panel-2); border:1px solid var(--line); border-radius:10px;
+    padding:13px 14px; color:var(--ink); font-family:inherit; font-size:16px; letter-spacing:1px;
+    text-align:center; margin-bottom:14px;
+  }
+  .login-panel input[type="text"]:focus{ outline:none; border-color:var(--turquoise); }
+  .btn-primary{
+    width:100%; padding:13px; border-radius:10px; border:none; background:var(--turquoise);
+    color:#052227; font-family:inherit; font-weight:700; font-size:14px; cursor:pointer; transition:filter .2s;
+  }
+  .btn-primary:hover{ filter:brightness(1.08); }
+  .btn-primary:disabled{ opacity:.5; cursor:default; }
+  .btn-gov{
+    width:100%; padding:13px; border-radius:10px; border:1px solid var(--line); background:var(--green);
+    color:#06231a; font-family:inherit; font-weight:700; font-size:14px; cursor:pointer; transition:filter .2s;
+  }
+  .btn-gov:hover{ filter:brightness(1.08); }
+  .gov-copy{ font-size:13px; color:var(--muted); line-height:1.9; margin-bottom:16px; }
+  .otp-row{ margin-top:8px; }
+  .otp-boxes{ display:flex; gap:8px; justify-content:center; margin-bottom:12px; }
+  .otp-boxes input{
+    width:42px; height:48px; text-align:center; font-size:18px; font-family:inherit;
+    background:var(--bg-panel-2); border:1px solid var(--line); border-radius:8px; color:var(--ink);
+  }
+  .otp-boxes input:focus{ outline:none; border-color:var(--turquoise); }
+  .otp-meta{ text-align:center; font-size:12px; color:var(--muted-2); margin-bottom:14px; }
+  .login-note{ font-size:11.5px; color:var(--muted-2); text-align:center; margin-top:18px; line-height:1.7; }
+  .guest-link{
+    display:block; text-align:center; margin-top:14px; padding-top:14px; border-top:1px solid var(--line);
+    font-size:12.5px; color:var(--muted); text-decoration:none; transition:color .2s;
+  }
+  .guest-link:hover{ color:var(--turquoise); }
+
+  .legend{
+    position:relative; z-index:6; pointer-events:auto;
+    display:flex; flex-wrap:wrap; gap:10px;
+    margin:36px clamp(20px,6vw,64px) 0;
+  }
+  .chip{
+    font-family:inherit; font-size:13.5px; color:var(--ink);
+    background:rgba(17,26,43,.72); border:1px solid var(--line);
+    padding:9px 16px; border-radius:100px; cursor:pointer;
+    display:flex; align-items:center; gap:8px;
+    backdrop-filter:blur(6px);
+    transition:border-color .2s, background .2s, transform .15s;
+  }
+  .chip:hover{ transform:translateY(-1px); border-color:var(--muted-2); }
+  .chip.active{ background:rgba(43,196,212,.14); border-color:var(--turquoise); }
+  .chip .sw{ width:9px; height:9px; border-radius:2px; flex:none; }
+
+  .hero-foot{
+    position:relative; z-index:6; pointer-events:none;
+    display:flex; align-items:flex-end; justify-content:space-between;
+    padding:26px clamp(20px,6vw,64px) 30px;
+    margin-top:26px;
+  }
+  .drag-hint{ font-size:12.5px; color:var(--muted-2); pointer-events:auto; }
+  .scroll-cue{
+    font-size:12px; color:var(--muted-2); display:flex; flex-direction:column; align-items:center; gap:8px;
+  }
+  .scroll-cue .line{ width:1px; height:34px; background:linear-gradient(var(--turquoise), transparent); animation:pulse-line 2s ease-in-out infinite; }
+  @keyframes pulse-line{ 0%,100%{ opacity:.3;} 50%{ opacity:1;} }
+
+  /* ---------- sections ---------- */
+  section{ position:relative; z-index:5; padding:clamp(70px,11vw,140px) clamp(20px,6vw,64px); }
+  .wrap{ max-width:1180px; margin:0 auto; }
+
+  .kicker{
+    font-size:13px; color:var(--turquoise); font-weight:700; letter-spacing:.3px; margin-bottom:14px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .kicker::before{ content:''; width:22px; height:1px; background:var(--turquoise); }
+  h2{ font-size:clamp(26px,4vw,42px); font-weight:800; letter-spacing:-.3px; max-width:20ch; margin-bottom:18px;}
+  .lead{ color:var(--muted); font-size:clamp(15px,1.6vw,17.5px); max-width:62ch; }
+
+  /* answer / fact strip */
+  .fact-strip{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line); border-radius:18px; overflow:hidden;
+    margin-top:56px;
+  }
+  @media (max-width:760px){ .fact-strip{ grid-template-columns:1fr; } }
+  .fact{ background:var(--bg-panel); padding:32px 28px; }
+  .fact .num{ font-size:clamp(26px,3.4vw,36px); font-weight:800; color:var(--ink); }
+  .fact .num span{ color:var(--turquoise); }
+  .fact .label{ margin-top:10px; font-size:13.5px; color:var(--muted); line-height:1.7; }
+
+  /* districts / layers explainer */
+  .district-grid{
+    display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-top:48px;
+  }
+  @media (max-width:760px){ .district-grid{ grid-template-columns:1fr; } }
+  .d-card{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:16px; padding:26px 26px 24px;
+    transition:border-color .25s, transform .25s;
+  }
+  .d-card:hover{ border-color:var(--muted-2); transform:translateY(-2px); }
+  .d-card .tag{
+    display:inline-flex; align-items:center; gap:8px; font-size:12.5px; font-weight:700; color:var(--muted);
+    margin-bottom:14px;
+  }
+  .d-card .tag .sw{ width:10px; height:10px; border-radius:3px; }
+  .d-card h3{ font-size:19px; font-weight:700; margin-bottom:10px; }
+  .d-card p{ font-size:14.5px; color:var(--muted); line-height:1.85; }
+
+  /* roadmap - real sequence, numbers justified */
+  .roadmap{ margin-top:52px; display:flex; flex-direction:column; }
+  .step{
+    display:grid; grid-template-columns:90px 1fr; gap:24px; padding:30px 0; border-top:1px solid var(--line);
+    position:relative;
+  }
+  .step:last-child{ border-bottom:1px solid var(--line); }
+  @media (max-width:640px){ .step{ grid-template-columns:56px 1fr; } }
+  .step .idx{ font-size:34px; font-weight:800; color:var(--muted-2); font-variant-numeric:tabular-nums; }
+  .step h4{ font-size:18px; font-weight:700; margin-bottom:8px; }
+  .step p{ font-size:14.5px; color:var(--muted); max-width:60ch; }
+  .step .idx.active-idx{ color:var(--turquoise); }
+
+  /* tech options */
+  .tech-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:48px; }
+  @media (max-width:900px){ .tech-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:600px){ .tech-grid{ grid-template-columns:1fr; } }
+  .t-card{
+    background:linear-gradient(180deg, var(--bg-panel), var(--bg-panel-2));
+    border:1px solid var(--line); border-radius:16px; padding:24px; display:flex; flex-direction:column; gap:14px;
+  }
+  .t-card .top{ display:flex; justify-content:space-between; align-items:flex-start;}
+  .t-card h3{ font-size:16.5px; font-weight:700; }
+  .t-card .badge{ font-size:11px; padding:4px 10px; border-radius:100px; border:1px solid var(--line); color:var(--muted); white-space:nowrap;}
+  .t-card p{ font-size:13.5px; color:var(--muted); line-height:1.8; }
+  .t-card .fit{ font-size:12.5px; color:var(--turquoise); font-weight:600; margin-top:auto; }
+
+  /* web architecture stack */
+  .arch-stack{ margin-top:48px; display:flex; flex-direction:column; position:relative; }
+  .arch-item{
+    display:grid; grid-template-columns:48px 1fr; gap:22px; padding:24px 0; border-top:1px solid var(--line);
+    align-items:start;
+  }
+  .arch-item:last-child{ border-bottom:1px solid var(--line); }
+  @media (max-width:640px){ .arch-item{ grid-template-columns:38px 1fr; gap:16px; } }
+  .arch-ic{
+    width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+    font-size:19px; flex:none; border:1px solid var(--line);
+  }
+  @media (max-width:640px){ .arch-ic{ width:38px; height:38px; font-size:15px; border-radius:9px; } }
+  .arch-item h4{ font-size:17.5px; font-weight:700; margin-bottom:8px; display:flex; align-items:center; gap:10px; }
+  .arch-item p{ font-size:14.5px; color:var(--muted); max-width:62ch; }
+  .arch-badge{
+    font-size:11px; font-weight:600; color:var(--turquoise); border:1px solid rgba(43,196,212,.35);
+    background:rgba(43,196,212,.08); padding:3px 10px; border-radius:100px;
+  }
+  .arch-item.highlight{ background:rgba(43,196,212,.045); margin:0 -20px; padding-inline:20px; border-radius:14px; }
+
+  /* designer section */
+  .designer-card{
+    margin-top:48px; display:grid; grid-template-columns:88px 1fr; gap:26px;
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:18px; padding:30px;
+  }
+  @media (max-width:600px){ .designer-card{ grid-template-columns:1fr; text-align:center; } }
+  .d-avatar{
+    width:88px; height:88px; border-radius:20px; flex:none;
+    background:linear-gradient(135deg, var(--turquoise), var(--amber));
+    display:flex; align-items:center; justify-content:center; font-size:34px; font-weight:800; color:#06131a;
+  }
+  @media (max-width:600px){ .d-avatar{ margin:0 auto; } }
+  .d-info h3{ font-size:19px; font-weight:700; }
+  .d-info h3 span{ font-size:13px; font-weight:400; color:var(--muted-2); }
+  .d-role{ font-size:13.5px; color:var(--turquoise); margin-top:6px; font-weight:600; }
+  .d-bio{ font-size:14px; color:var(--muted); line-height:1.85; margin-top:12px; max-width:62ch; }
+  .d-links{ display:flex; gap:8px; margin-top:16px; flex-wrap:wrap; }
+  @media (max-width:600px){ .d-links{ justify-content:center; } }
+  .d-chip{
+    font-size:12.5px; color:var(--muted); border:1px solid var(--line); padding:6px 14px; border-radius:100px;
+  }
+
+  footer{
+    padding:50px clamp(20px,6vw,64px) 60px; border-top:1px solid var(--line);
+    display:flex; flex-wrap:wrap; gap:20px; justify-content:space-between; align-items:center;
+  }
+  footer .f-left{ font-size:13px; color:var(--muted-2); }
+  footer .f-right{ font-size:13px; color:var(--muted-2); }
+
+  .reveal{ opacity:0; transform:translateY(22px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.show{ opacity:1; transform:translateY(0); }
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ opacity:1; transform:none; transition:none; }
+    html{ scroll-behavior:auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="noise"></div>
+
+<nav>
+  <div class="brand"><span class="dot"></span> نقشه‌ی سه‌بعدی خمینی‌شهر</div>
+  <div class="links">
+    <a href="#idea">ایده</a>
+    <a href="#architecture">معماری وب</a>
+    <a href="#designer">طراح وب‌سایت</a>
+    <a href="#tech">فناوری</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div id="scene-wrap"><canvas id="scene"></canvas></div>
+
+  <div class="hero-copy">
+    <div class="login-card">
+      <div class="login-head"><span class="dot"></span>ورود به نقشه‌ی سه‌بعدیِ خمینی‌شهر</div>
+
+      <div class="login-tabs">
+        <button class="ltab active" data-tab="otp" type="button">تلفنِ همراه و رمزِ یکبار مصرف</button>
+        <button class="ltab" data-tab="gov" type="button">دولت من</button>
+      </div>
+
+      <div class="login-panel" data-panel="otp">
+        <label for="phone">شماره تلفنِ همراه</label>
+        <input id="phone" type="text" inputmode="numeric" maxlength="11" placeholder="۰۹۱۲۳۴۵۶۷۸۹" autocomplete="off">
+        <button class="btn-primary" id="send-otp" type="button">دریافتِ رمزِ یکبار مصرف</button>
+
+        <div class="otp-row" id="otp-row" hidden>
+          <label>رمزِ پیامک‌شده</label>
+          <div class="otp-boxes">
+            <input maxlength="1" inputmode="numeric">
+            <input maxlength="1" inputmode="numeric">
+            <input maxlength="1" inputmode="numeric">
+            <input maxlength="1" inputmode="numeric">
+            <input maxlength="1" inputmode="numeric">
+          </div>
+          <div class="otp-meta" id="otp-meta">ارسالِ مجدد تا <span id="otp-timer">۰۱:۵۹</span></div>
+          <button class="btn-primary" id="confirm-otp" type="button">تأیید و ورود</button>
+        </div>
+      </div>
+
+      <div class="login-panel" data-panel="gov" hidden>
+        <p class="gov-copy">با حساب کاربریِ «دولت من» وارد بشید — احرازِ هویت مستقیماً از درگاهِ دولت انجام می‌شه.</p>
+        <button class="btn-gov" id="gov-login" type="button">ورود با دولت من</button>
+      </div>
+
+      <div class="login-note">این بخش فقط نمونه‌ی رابط کاربریه و به هیچ سامانه‌ی احرازِ هویتِ واقعی متصل نیست.</div>
+      <a href="#idea" class="guest-link">ورود به‌عنوانِ مهمان و مشاهده‌ی نقشه ↓</a>
+    </div>
+  </div>
+
+  <div class="legend" id="legend"></div>
+
+  <div class="hero-foot">
+    <div class="drag-hint">🖱 بکشید تا بچرخه — لمس هم روی موبایل کار می‌کنه</div>
+    <div class="scroll-cue"><span>ادامه</span><span class="line"></span></div>
+  </div>
+</div>
+
+<section id="idea">
+  <div class="wrap reveal">
+    <div class="kicker">چرا این شهر</div>
+    <h2>خمینی‌شهر، زیر یه نگاه سه‌بعدی، شکل دیگه‌ای پیدا می‌کنه</h2>
+    <p class="lead">
+      این شهر با نام قدیمی «سِده» شناخته می‌شد و از دلِ سه دِه و سه دژِ ساسانی شکل گرفت.
+      امروز یکی از متراکم‌ترین شهرهای ایرانه، و همین تراکم بالا، بافتِ فشرده و صنایع‌دستیِ زنده‌ش
+      باعث می‌شه یه مدلِ سه‌بعدی — برخلاف نقشه‌ی مسطح — بتونه لایه‌های شهر رو واقعاً نشون بده: ارتفاع بافت‌های قدیمی و جدید، تراکم محله‌ها، و مسیر آب و باغات.
+    </p>
+
+    <div class="fact-strip">
+      <div class="fact">
+        <div class="num">پیش از <span>اصفهان</span></div>
+        <div class="label">نام قدیمی شهر «سِده» بوده و پیشینه‌اش به دوران ساسانی و کهن‌دژِ محله‌ی خوزان می‌رسه.</div>
+      </div>
+      <div class="fact">
+        <div class="num"><span>دومین</span> شهر پرتراکم</div>
+        <div class="label">بر پایه‌ی سرشماری ۱۳۹۵، خمینی‌شهر پس از تهران متراکم‌ترین شهر ایران بوده.</div>
+      </div>
+      <div class="fact">
+        <div class="num">دستِ <span>هنرمند</span></div>
+        <div class="label">قالی‌بافی، خاتم‌کاری، قلمزنی و مسگری — صنایع‌دستی‌ای که هنوز در دل محله‌ها زنده‌ست.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="districts">
+  <div class="wrap reveal">
+    <div class="kicker">لایه‌های ماکت</div>
+    <h2>شهر رو به پنج لایه شکستیم</h2>
+    <p class="lead">همون لایه‌هایی که بالای صحنه‌ی سه‌بعدی می‌تونید تک‌تک روشن و خاموششون کنید.</p>
+
+    <div class="district-grid" id="district-grid"></div>
+  </div>
+</section>
+
+<section id="architecture">
+  <div class="wrap reveal">
+    <div class="kicker">معماری وب</div>
+    <h2>سامانه از چند لایه تشکیل شده</h2>
+    <p class="lead">از رابطِ سه‌بعدی که می‌بینید، تا لایه‌ی احرازِ هویت و دستیارِ هوشمندِ نقشه — هرکدوم یه مسئولیتِ مشخص دارن.</p>
+
+    <div class="arch-stack" id="arch-stack"></div>
+  </div>
+</section>
+
+<section id="roadmap">
+  <div class="wrap reveal">
+    <div class="kicker">مسیر ساخت نسخه‌ی واقعی</div>
+    <h2>از این ماکتِ مفهومی تا یه نقشه‌ی دقیق و واقعی</h2>
+    <p class="lead">این چهار قدم، به ترتیب، فاصله‌ی بین نمونه‌ی اولیه‌ی امروز تا یه نقشه‌ی سه‌بعدیِ منطبق با واقعیتِ خمینی‌شهره.</p>
+
+    <div class="roadmap" id="roadmap-steps"></div>
+  </div>
+</section>
+
+<section id="tech">
+  <div class="wrap reveal">
+    <div class="kicker">گزینه‌های فنی</div>
+    <h2>با چه ابزاری بسازیمش؟</h2>
+    <p class="lead">بسته به این‌که هدف، نقشه‌ی دقیق باشه یا یه تجربه‌ی سینمایی، مسیر فنی فرق می‌کنه.</p>
+
+    <div class="tech-grid" id="tech-grid"></div>
+  </div>
+</section>
+
+<section id="designer">
+  <div class="wrap reveal">
+    <div class="kicker">تیمِ سازنده</div>
+    <h2>طراحِ وب‌سایت</h2>
+
+    <div class="designer-card">
+      <div class="d-avatar">ط</div>
+      <div class="d-info">
+        <h3>نامِ طراح <span>— جای‌گزین کنید</span></h3>
+        <p class="d-role">طراحِ رابط کاربری و تجربه‌ی کاربری (UI/UX)</p>
+        <p class="d-bio">این بخش جای معرفیِ طراح یا استودیوییه که این صفحه رو ساخته — یه بیوی کوتاه، نمونه‌کارها، و راهِ ارتباطی، جای همین متنِ نمونه بذارید.</p>
+        <div class="d-links">
+          <span class="d-chip">نمونه‌کار</span>
+          <span class="d-chip">ایمیل</span>
+          <span class="d-chip">لینکدین</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-left">نمونه‌ی اولیه — داده‌های مکانی این صفحه واقعی نیستن و فقط برای نمایشِ ایده ساخته شدن.</div>
+  <div class="f-right">خمینی‌شهر، استان اصفهان</div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* ============================================================
+   Isometric 3D concept-map of Khomeinishahr
+   ============================================================ */
+
+const LAYERS = [
+  { key:'historic',    label:'بافت تاریخی خوزان', color:0x2bc4d4, sw:'#2bc4d4' },
+  { key:'craft',       label:'محله‌های صنایع‌دستی', color:0xe3944a, sw:'#e3944a' },
+  { key:'residential', label:'بافت مسکونیِ متراکم', color:0xc9a06a, sw:'#c9a06a' },
+  { key:'garden',      label:'باغات و کشتزار', color:0x4f9370, sw:'#4f9370' },
+  { key:'water',       label:'قنات پیروزشاهی', color:0x3fd6e6, sw:'#3fd6e6' },
+];
+
+// ---- legend + district cards + roadmap + tech cards (data-driven copy) ----
+const legendEl = document.getElementById('legend');
+LAYERS.forEach(l=>{
+  const b = document.createElement('button');
+  b.className='chip active';
+  b.dataset.key=l.key;
+  b.innerHTML = `<span class="sw" style="background:${l.sw}"></span>${l.label}`;
+  legendEl.appendChild(b);
+});
+const allChip = document.createElement('button');
+allChip.className='chip';
+allChip.id='chip-all';
+allChip.innerHTML = `<span class="sw" style="background:#8b97ae"></span>نمایش همه`;
+legendEl.appendChild(allChip);
+
+const districtCopy = [
+  {k:'historic', title:'بافت تاریخی خوزان', body:'محله‌ی خوزان و ویرانه‌های کهن‌دژ، به‌همراه مسجد جامعِ قدیمی‌ش — قدیمی‌ترین لایه‌ی هویتیِ شهر.'},
+  {k:'craft', title:'محله‌های صنایع‌دستی', body:'کارگاه‌های خانگیِ قالی‌بافی در کنار خاتم‌کاری، قلمزنی و مسگری — صنایعی که هنوز جریان دارن.'},
+  {k:'residential', title:'بافت مسکونیِ متراکم', body:'خمینی‌شهر پس از تهران متراکم‌ترین شهر کشوره؛ همین تراکم، ریتم اصلیِ بافتِ شهریه.'},
+  {k:'garden', title:'باغات و کشتزار', body:'باغ‌های گلابی و میوه‌ی بومیِ «سیبری»، در کنار زمین‌های کشاورزیِ اطراف شهر.'},
+  {k:'water', title:'قنات پیروزشاهی', body:'قناتی که به فرمانِ پیروزشاهِ ساسانی حفر شد و قرن‌ها آب این منطقه رو تأمین کرده.'},
+];
+const dGrid = document.getElementById('district-grid');
+districtCopy.forEach(d=>{
+  const layer = LAYERS.find(l=>l.key===d.k);
+  const el = document.createElement('div');
+  el.className='d-card';
+  el.innerHTML = `<div class="tag"><span class="sw" style="background:${layer.sw}"></span>لایه</div>
+    <h3>${d.title}</h3><p>${d.body}</p>`;
+  dGrid.appendChild(el);
+});
+
+const roadmap = [
+  {t:'داده‌ی مکانیِ واقعی', p:'گرفتنِ نقشه‌ی دقیق قطعات، معابر و بناهای خمینی‌شهر از OpenStreetMap یا داده‌ی شهرداری، به‌جای بافتِ ساختگیِ همین نمونه.'},
+  {t:'مدل‌سازیِ بناها', p:'تبدیل نقشه‌ی دوبعدی به حجم — ارتفاع واقعیِ ساختمان‌ها، گنبد و مناره‌ی مسجدها، و بافتِ فشرده‌ی محله‌های قدیمی.'},
+  {t:'بافت، نور و رنگ', p:'استفاده از عکس‌های واقعی برای نمای ساختمان‌ها، و نورپردازیِ شب‌هنگام برای نشون‌دادنِ زندگیِ جاریِ محله‌ها.'},
+  {t:'تعامل و لایه‌ها', p:'همین قابلیتِ روشن/خاموش‌کردنِ لایه‌ها، ولی روی داده‌ی واقعی — به‌همراه جست‌وجوی آدرس و مسیر.'},
+];
+const rEl = document.getElementById('roadmap-steps');
+roadmap.forEach((s,i)=>{
+  const el = document.createElement('div');
+  el.className='step';
+  el.innerHTML = `<div class="idx">${String(i+1).padStart(2,'0')}</div>
+    <div><h4>${s.t}</h4><p>${s.p}</p></div>`;
+  rEl.appendChild(el);
+});
+
+const techs = [
+  {name:'Mapbox GL — لایه‌ی سه‌بعدی', badge:'داده‌محور', body:'روی نقشه‌ی واقعیِ دنیا، ساختمان‌ها رو با ارتفاعِ واقعی بالا می‌بره. برای نقشه‌ی دقیق و آدرس‌پذیر، بهترین مسیره.', fit:'مناسبِ نسخه‌ی نهایی'},
+  {name:'CesiumJS — کره و توپوگرافی', badge:'مقیاسِ بزرگ', body:'وقتی قراره هم شهر رو ببینیم هم زمینِ اطرافش رو — کوه‌های شمالِ شهر، دشتِ جنوبی — این گزینه واقع‌گرایانه‌تره.', fit:'مناسبِ دیدِ منطقه‌ای'},
+  {name:'Three.js — ماکتِ استایلیزه', badge:'همینی که دیدید', body:'برای نمونه‌ی مفهومی و تجربه‌ی سبک و تعاملی — دقیقاً همون چیزی که بالای همین صفحه اجرا شده.', fit:'مناسبِ نمونه‌ی اولیه'},
+];
+const tGrid = document.getElementById('tech-grid');
+techs.forEach(t=>{
+  const el = document.createElement('div');
+  el.className='t-card';
+  el.innerHTML = `<div class="top"><h3>${t.name}</h3><span class="badge">${t.badge}</span></div>
+    <p>${t.body}</p><div class="fit">${t.fit} ›</div>`;
+  tGrid.appendChild(el);
+});
+
+// ---- login card: tabs, OTP simulation, gov-login simulation (UI mock only) ----
+document.querySelectorAll('.ltab').forEach(tab=>{
+  tab.addEventListener('click', ()=>{
+    document.querySelectorAll('.ltab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    const key = tab.dataset.tab;
+    document.querySelectorAll('.login-panel').forEach(p=>{ p.hidden = p.dataset.panel !== key; });
+  });
+});
+
+const nidInput = document.getElementById('nid');
+const sendOtpBtn = document.getElementById('send-otp');
+const otpRow = document.getElementById('otp-row');
+const otpBoxes = document.querySelectorAll('.otp-boxes input');
+const otpTimerEl = document.getElementById('otp-timer');
+const otpMetaEl = document.getElementById('otp-meta');
+const confirmOtpBtn = document.getElementById('confirm-otp');
+const faDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+function toFa(n){ return String(n).split('').map(c=> /\d/.test(c) ? faDigits[+c] : c).join(''); }
+
+let otpCountdownId = null;
+sendOtpBtn.addEventListener('click', ()=>{
+  const digits = nidInput.value.replace(/\D/g,'');
+  if(digits.length !== 10){
+    nidInput.style.borderColor = '#c65b5b';
+    nidInput.placeholder = 'کدِ ملی باید ۱۰ رقم باشه';
+    return;
+  }
+  nidInput.style.borderColor = '';
+  otpRow.hidden = false;
+  sendOtpBtn.disabled = true;
+  otpBoxes[0].focus();
+
+  let secs = 119;
+  clearInterval(otpCountdownId);
+  otpMetaEl.innerHTML = `ارسالِ مجدد تا <span id="otp-timer">${toFa('01:59')}</span>`;
+  otpCountdownId = setInterval(()=>{
+    secs--;
+    const m = String(Math.floor(secs/60)).padStart(2,'0');
+    const s = String(secs%60).padStart(2,'0');
+    const el = document.getElementById('otp-timer');
+    if(el) el.textContent = toFa(`${m}:${s}`);
+    if(secs <= 0){
+      clearInterval(otpCountdownId);
+      otpMetaEl.textContent = 'کدی دریافت نکردید؟';
+      sendOtpBtn.disabled = false;
+    }
+  }, 1000);
+});
+
+otpBoxes.forEach((box, i)=>{
+  box.addEventListener('input', ()=>{
+    box.value = box.value.replace(/\D/g,'');
+    if(box.value && otpBoxes[i+1]) otpBoxes[i+1].focus();
+  });
+  box.addEventListener('keydown', (e)=>{
+    if(e.key === 'Backspace' && !box.value && otpBoxes[i-1]) otpBoxes[i-1].focus();
+  });
+});
+
+confirmOtpBtn.addEventListener('click', ()=>{
+  confirmOtpBtn.textContent = 'ورود شبیه‌سازی شد ✓';
+  confirmOtpBtn.disabled = true;
+  setTimeout(()=>{ confirmOtpBtn.textContent = 'تأیید و ورود'; confirmOtpBtn.disabled = false; }, 2200);
+});
+
+const govBtn = document.getElementById('gov-login');
+govBtn.addEventListener('click', ()=>{
+  const original = govBtn.textContent;
+  govBtn.textContent = 'در حال اتصال به دولت من…';
+  govBtn.disabled = true;
+  setTimeout(()=>{ govBtn.textContent = original; govBtn.disabled = false; }, 2200);
+});
+
+const architecture = [
+  {icon:'🖥️', title:'لایه‌ی نمایش (Client)', body:'موتور سه‌بعدیِ Three.js برای همین نمونه‌ی مفهومی، و Mapbox GL برای نسخه‌ای که روی داده‌ی واقعیِ نقشه اجرا می‌شه.'},
+  {icon:'🔐', title:'لایه‌ی احرازِ هویت', body:'ورود با کدِ ملی و رمزِ یکبار مصرفِ پیامکی، یا تأییدِ هویت از طریقِ درگاهِ دولت من — دقیقاً همون فرمِ بالای صفحه.'},
+  {icon:'🗺️', title:'لایه‌ی داده‌ی مکانی (GIS)', body:'نقشه‌ی قطعات، معابر و کاربریِ زمین — برگرفته از OpenStreetMap یا داده‌ی رسمیِ شهرداریِ خمینی‌شهر.'},
+  {icon:'🤖', title:'ربات نقشه‌ی سه‌بعدی', body:'دستیارِ گفت‌وگومحوری که با یه پیام دوربین رو به‌سمتِ یه محله می‌بره، لایه‌ای رو روشن/خاموش می‌کنه، یا درباره‌ی یه بنا توضیح می‌ده.', highlight:true, badge:'لایه‌ی هوشمند'},
+  {icon:'🗄️', title:'لایه‌ی سرور و API', body:'سرویسی که داده‌ی مکانی، حسابِ کاربری و پیام‌های ربات رو بینِ کلاینت و پایگاه‌داده هماهنگ می‌کنه.'},
+];
+const archEl = document.getElementById('arch-stack');
+architecture.forEach(a=>{
+  const el = document.createElement('div');
+  el.className = 'arch-item' + (a.highlight ? ' highlight' : '');
+  el.innerHTML = `<div class="arch-ic">${a.icon}</div>
+    <div><h4>${a.title}${a.badge ? `<span class="arch-badge">${a.badge}</span>` : ''}</h4><p>${a.body}</p></div>`;
+  archEl.appendChild(el);
+});
+
+// ---- reveal on scroll ----
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('show'); io.unobserve(en.target); } });
+}, {threshold:.15});
+revealEls.forEach(e=>io.observe(e));
+
+// ============================================================
+// THREE.JS SCENE
+// ============================================================
+(function(){
+  const canvas = document.getElementById('scene');
+  const wrap = document.getElementById('scene-wrap');
+  if(!window.THREE){ return; }
+
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(0x0a0f1a, 0.028);
+
+  const frustum = 15;
+  let aspect = wrap.clientWidth / wrap.clientHeight;
+  const camera = new THREE.OrthographicCamera(-frustum*aspect, frustum*aspect, frustum, -frustum, 0.1, 200);
+  camera.position.set(24, 20, 24);
+  camera.lookAt(0,0,0);
+
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(wrap.clientWidth, wrap.clientHeight);
+
+  // lights
+  scene.add(new THREE.AmbientLight(0x3a4a68, 1.1));
+  const moon = new THREE.DirectionalLight(0x9fb8e0, 0.9);
+  moon.position.set(-14, 22, 10);
+  scene.add(moon);
+  const turqLight = new THREE.PointLight(0x2bc4d4, 2.2, 26);
+  turqLight.position.set(2, 5, 2);
+  scene.add(turqLight);
+  const amberLight = new THREE.PointLight(0xe3944a, 1.6, 22);
+  amberLight.position.set(-6, 4, -4);
+  scene.add(amberLight);
+
+  const cityGroup = new THREE.Group();
+  scene.add(cityGroup);
+
+  const layerGroups = {};
+  LAYERS.forEach(l=>{ layerGroups[l.key] = new THREE.Group(); cityGroup.add(layerGroups[l.key]); });
+
+  const GRID = 18;
+  const CELL = 1.55;
+  const half = (GRID*CELL)/2;
+
+  function zoneFor(gx, gz){
+    // diagonal water channel (qanat line)
+    if (Math.abs((gx - gz)) < 1 && gx > -6 && gx < 7) return 'water';
+    // historic core near center
+    const dHist = Math.hypot(gx-1, gz+3);
+    if (dHist < 2.6) return 'historic';
+    // craft cluster east
+    const dCraft = Math.hypot(gx-6, gz-4);
+    if (dCraft < 3.4) return 'craft';
+    // garden patches - two clusters
+    const dG1 = Math.hypot(gx+7, gz+7);
+    const dG2 = Math.hypot(gx+7, gz-6);
+    if (dG1 < 3 || dG2 < 2.6) return 'garden';
+    // rest residential, with a bit of randomness to feel organic
+    return 'residential';
+  }
+
+  const mats = {};
+  function matFor(key, emissiveBoost){
+    const l = LAYERS.find(x=>x.key===key);
+    if(!mats[key+emissiveBoost]){
+      mats[key+emissiveBoost] = new THREE.MeshStandardMaterial({
+        color:l.color, emissive:l.color, emissiveIntensity:emissiveBoost, roughness:.75, metalness:.08
+      });
+    }
+    return mats[key+emissiveBoost];
+  }
+
+  const boxGeo = new THREE.BoxGeometry(1,1,1);
+  const coneGeo = new THREE.ConeGeometry(0.42, 0.9, 8);
+  const domeGeo = new THREE.SphereGeometry(0.55, 16, 12, 0, Math.PI*2, 0, Math.PI/2);
+  const minaretGeo = new THREE.CylinderGeometry(0.14, 0.16, 2.4, 10);
+
+  for(let ix=0; ix<GRID; ix++){
+    for(let iz=0; iz<GRID; iz++){
+      const gx = ix - GRID/2, gz = iz - GRID/2;
+      const x = gx*CELL, z = gz*CELL;
+      const zone = zoneFor(gx, gz);
+
+      if (zone === 'water'){
+        const w = new THREE.Mesh(new THREE.BoxGeometry(CELL*0.92, 0.06, CELL*0.92), matFor('water', 0.55));
+        w.position.set(x, 0.03, z);
+        layerGroups.water.add(w);
+        continue;
+      }
+
+      if (zone === 'garden'){
+        if (Math.random() > 0.35){
+          const trunkH = 0.5;
+          const tree = new THREE.Mesh(coneGeo, matFor('garden', 0.35));
+          tree.position.set(x + (Math.random()-.5)*0.6, trunkH, z + (Math.random()-.5)*0.6);
+          tree.scale.setScalar(0.7 + Math.random()*0.6);
+          layerGroups.garden.add(tree);
+        }
+        continue;
+      }
+
+      // historic landmark: one mosque-like structure at the very center of the cluster
+      if (zone === 'historic' && Math.hypot(gx-1, gz+3) < 0.9){
+        const base = new THREE.Mesh(new THREE.CylinderGeometry(0.62,0.62,0.9,16), matFor('historic', 0.4));
+        base.position.set(x, 0.45, z);
+        const dome = new THREE.Mesh(domeGeo, matFor('historic', 0.9));
+        dome.position.set(x, 0.9, z);
+        const minaret = new THREE.Mesh(minaretGeo, matFor('historic', 0.5));
+        minaret.position.set(x+0.9, 1.2, z+0.6);
+        layerGroups.historic.add(base, dome, minaret);
+        continue;
+      }
+
+      let h;
+      let boost;
+      if (zone === 'historic'){ h = 0.5 + Math.random()*0.5; boost = 0.5; }
+      else if (zone === 'craft'){ h = 0.4 + Math.random()*0.9; boost = 0.65; }
+      else { h = 0.35 + Math.random()*1.7; boost = 0.3; }
+
+      const b = new THREE.Mesh(boxGeo, matFor(zone, boost));
+      b.scale.set(CELL*0.82, h, CELL*0.82);
+      b.position.set(x, h/2, z);
+      layerGroups[zone].add(b);
+    }
+  }
+
+  // ground plate
+  const ground = new THREE.Mesh(
+    new THREE.CircleGeometry(half*1.55, 48),
+    new THREE.MeshStandardMaterial({ color:0x0d1420, roughness:1, metalness:0 })
+  );
+  ground.rotation.x = -Math.PI/2;
+  ground.position.y = -0.02;
+  scene.add(ground);
+
+  // subtle rim ring
+  const ring = new THREE.Mesh(
+    new THREE.RingGeometry(half*1.3, half*1.32, 64),
+    new THREE.MeshBasicMaterial({ color:0x22304a, side:THREE.DoubleSide, transparent:true, opacity:.5 })
+  );
+  ring.rotation.x = -Math.PI/2;
+  scene.add(ring);
+
+  // ---- interaction: drag to rotate, auto-rotate when idle ----
+  let dragging = false, lastX = 0, lastY = 0;
+  let rotY = 0.55, rotX = 0;
+  let idleTimer = null, autoRotate = true;
+
+  function setIdle(){
+    autoRotate = false;
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(()=>{ autoRotate = true; }, 2600);
+  }
+
+  function pointerDown(x,y){ dragging = true; lastX = x; lastY = y; setIdle(); }
+  function pointerMove(x,y){
+    if(!dragging) return;
+    const dx = x - lastX, dy = y - lastY;
+    rotY += dx * 0.006;
+    rotX = Math.max(-0.35, Math.min(0.35, rotX + dy*0.004));
+    lastX = x; lastY = y;
+  }
+  function pointerUp(){ dragging = false; setIdle(); }
+
+  canvas.addEventListener('mousedown', e=>pointerDown(e.clientX, e.clientY));
+  window.addEventListener('mousemove', e=>pointerMove(e.clientX, e.clientY));
+  window.addEventListener('mouseup', pointerUp);
+  canvas.addEventListener('touchstart', e=>{ const t=e.touches[0]; pointerDown(t.clientX,t.clientY); }, {passive:true});
+  canvas.addEventListener('touchmove', e=>{ const t=e.touches[0]; pointerMove(t.clientX,t.clientY); }, {passive:true});
+  canvas.addEventListener('touchend', pointerUp);
+
+  // ---- legend toggle logic ----
+  let activeSet = new Set(LAYERS.map(l=>l.key));
+  function applyVisibility(){
+    LAYERS.forEach(l=>{ layerGroups[l.key].visible = activeSet.has(l.key); });
+    document.querySelectorAll('.chip[data-key]').forEach(c=>{
+      c.classList.toggle('active', activeSet.has(c.dataset.key));
+    });
+    document.getElementById('chip-all').classList.toggle('active', activeSet.size === LAYERS.length);
+  }
+  document.querySelectorAll('.chip[data-key]').forEach(chip=>{
+    chip.addEventListener('click', ()=>{
+      const k = chip.dataset.key;
+      if(activeSet.has(k)) activeSet.delete(k); else activeSet.add(k);
+      if(activeSet.size === 0) activeSet = new Set(LAYERS.map(l=>l.key));
+      applyVisibility();
+    });
+  });
+  document.getElementById('chip-all').addEventListener('click', ()=>{
+    activeSet = new Set(LAYERS.map(l=>l.key));
+    applyVisibility();
+  });
+
+  // ---- resize ----
+  function onResize(){
+    aspect = wrap.clientWidth / Math.max(wrap.clientHeight,1);
+    camera.left = -frustum*aspect; camera.right = frustum*aspect;
+    camera.top = frustum; camera.bottom = -frustum;
+    camera.updateProjectionMatrix();
+    renderer.setSize(wrap.clientWidth, wrap.clientHeight);
+  }
+  window.addEventListener('resize', onResize);
+  onResize();
+
+  // ---- animate ----
+  const clock = new THREE.Clock();
+  function animate(){
+    requestAnimationFrame(animate);
+    const dt = clock.getDelta();
+    if(autoRotate && !dragging) rotY += dt * 0.08;
+    cityGroup.rotation.y = rotY;
+    cityGroup.rotation.x = rotX;
+    turqLight.position.x = Math.sin(clock.elapsedTime*0.4)*4 + 2;
+    turqLight.position.z = Math.cos(clock.elapsedTime*0.4)*4 + 2;
+    renderer.render(scene, camera);
+  }
+  animate();
+})();
+</script>
+</body>
+</html>

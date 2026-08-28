@@ -102,6 +102,37 @@ nav{display:flex; align-items:center; justify-content:space-between; padding:16p
 .burger{display:none; width:22px; height:16px; flex-direction:column; justify-content:space-between; cursor:pointer;}
 .burger span{height:2px; background:var(--text-0); border-radius:2px;}
 
+/* ===== SITE SWITCHER ===== */
+.switcher-wrap{position:relative;}
+.switcher-btn{
+  width:38px; height:38px; border-radius:10px; border:1px solid var(--panel-brd);
+  background:rgba(255,255,255,.02); display:flex; align-items:center; justify-content:center;
+  cursor:pointer; transition:.2s all; flex-shrink:0;
+}
+.switcher-btn:hover{border-color:var(--accent); background:rgba(0,212,255,.08);}
+.switcher-btn svg{width:18px; height:18px; color:var(--text-1);}
+.switcher-btn:hover svg{color:var(--accent);}
+.switcher-panel{
+  position:absolute; top:52px; left:0; width:320px; background:var(--panel);
+  border:1px solid var(--panel-brd); border-radius:16px; padding:14px;
+  box-shadow:0 30px 70px -20px rgba(0,0,0,.75); z-index:150;
+  display:none; grid-template-columns:1fr 1fr; gap:8px;
+}
+.switcher-panel.open{display:grid;}
+.switcher-title{grid-column:1/-1; font-family:var(--mono); font-size:11px; letter-spacing:.08em; color:var(--text-2); text-transform:uppercase; padding:4px 6px 10px;}
+.switcher-item{
+  display:flex; flex-direction:column; align-items:center; gap:8px; text-align:center;
+  padding:14px 8px; border-radius:12px; border:1px solid transparent; transition:.2s all;
+}
+.switcher-item:hover{background:rgba(255,255,255,.04); border-color:var(--panel-brd);}
+.switcher-item.active{border-color:var(--accent); background:rgba(0,212,255,.07);}
+.switcher-icon{
+  width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center;
+  font-size:17px; background:rgba(255,255,255,.05);
+}
+.switcher-item span{font-size:11.5px; color:var(--text-1); line-height:1.4;}
+.switcher-item.active span{color:var(--text-0); font-weight:600;}
+
 /* ===== HERO ===== */
 .hero{
   position:relative; padding:168px 0 90px; min-height:92vh; display:flex; align-items:center;
@@ -317,6 +348,38 @@ footer{border-top:1px solid var(--panel-brd); padding:64px 0 30px; margin-top:60
         <small>ENGINEERING NUMERICAL SUITE</small>
       </div>
     </div>
+    <div class="switcher-wrap">
+      <div class="switcher-btn" onclick="toggleSwitcher()" title="سایت‌های دیگر هلدینگ">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+      </div>
+      <div class="switcher-panel" id="switcherPanel">
+        <div class="switcher-title">سایت‌های گروه ما</div>
+        <a class="switcher-item active" href="index.html">
+          <div class="switcher-icon" style="color:var(--accent);">⌬</div>
+          <span>SimuPlate<br>تحلیل کامپوزیت</span>
+        </a>
+        <a class="switcher-item" href="holding.html">
+          <div class="switcher-icon" style="color:var(--hot);">🏗</div>
+          <span>هلدینگ ساختمانی</span>
+        </a>
+        <a class="switcher-item" href="handicrafts.html">
+          <div class="switcher-icon" style="color:var(--hot-2);">🧵</div>
+          <span>صنایع دستی</span>
+        </a>
+        <a class="switcher-item" href="civil-training.html">
+          <div class="switcher-icon" style="color:var(--ok);">🏛</div>
+          <span>آموزش نرم‌افزار عمران</span>
+        </a>
+        <a class="switcher-item" href="tutor.html">
+          <div class="switcher-icon" style="color:var(--accent-2);">🎓</div>
+          <span>معلم خصوصی</span>
+        </a>
+        <a class="switcher-item" href="map3d.html">
+          <div class="switcher-icon" style="color:var(--accent);">🗺</div>
+          <span>نقشه سه‌بعدی</span>
+        </a>
+      </div>
+    </div>
     <div class="nav-links">
       <a href="#features">ویژگی‌ها</a>
       <a href="#demo">دموی زنده</a>
@@ -326,6 +389,7 @@ footer{border-top:1px solid var(--panel-brd); padding:64px 0 30px; margin-top:60
     </div>
     <div class="nav-cta">
       <a href="#" class="btn btn-ghost" onclick="openModal('login'); return false;" style="padding:10px 20px; font-size:13.5px;">ورود</a>
+      <a href="app.html" class="btn btn-hot" style="padding:10px 20px; font-size:13.5px;">🚀 اجرای آنلاین</a>
       <a href="#pricing" class="btn btn-primary" style="padding:10px 20px; font-size:13.5px;">خرید نسخه</a>
       <div class="burger" onclick="document.querySelector('.nav-links').classList.toggle('mobile-open')"><span></span><span></span><span></span></div>
     </div>
@@ -340,7 +404,7 @@ footer{border-top:1px solid var(--panel-brd); padding:64px 0 30px; margin-top:60
       <h1 style="margin-top:20px;">تحلیل عددی و <span class="grad">رندرینگ سه‌بعدی</span> سازه‌های کامپوزیتی، در یک محیط واحد</h1>
       <p class="lead">پلتفرمی که بر پایه‌ی موتور محاسباتی متلب ساخته شده؛ خمش ورق‌های کامپوزیتی چندلایه را با المان محدود حل می‌کند و نتیجه را به‌صورت رندر سه‌بعدی زنده و گزارش فنی آماده تحویل می‌دهد.</p>
       <div class="hero-cta">
-        <a href="#pricing" class="btn btn-hot">دریافت لایسنس ⟵</a>
+        <a href="app.html" class="btn btn-hot">🚀 اجرای آنلاین روی MATLAB ⟵</a>
         <a href="#demo" class="btn btn-ghost">مشاهده‌ی دموی رندر</a>
       </div>
       <div class="hero-badges">
@@ -390,6 +454,10 @@ footer{border-top:1px solid var(--panel-brd); padding:64px 0 30px; margin-top:60
       <div class="eyebrow">دموی تعاملی</div>
       <h2>رندر زنده‌ی میدان خیز صفحه</h2>
       <p>پارامترها را تغییر دهید و اثر آن‌ها را روی شکل تغییرشکل‌یافته‌ی صفحه به‌صورت آنی ببینید.</p>
+      <div style="margin-top:18px; padding:14px 18px; border:1px solid var(--panel-brd); border-radius:12px; background:rgba(0,212,255,.05); display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+        <span style="font-size:13.5px; color:var(--text-1);">این یک شبیه‌سازی بصری ساده است. برای حل واقعی FEM با موتور MATLAB خودت، وارد پنل اجرا شو.</span>
+        <a href="app.html" class="btn btn-primary" style="padding:9px 18px; font-size:13px; white-space:nowrap;">ورود به پنل اجرا ⟵</a>
+      </div>
     </div>
     <div class="demo-panel reveal">
       <div class="demo-controls">
@@ -743,6 +811,17 @@ function updateStats(){
   cfemVal.textContent = c;
   wmaxVal.textContent = wmax + 'e-08 m';
 }
+
+/* site switcher */
+function toggleSwitcher(){
+  document.getElementById('switcherPanel').classList.toggle('open');
+}
+document.addEventListener('click', (e) => {
+  const wrap = document.querySelector('.switcher-wrap');
+  if(wrap && !wrap.contains(e.target)){
+    document.getElementById('switcherPanel').classList.remove('open');
+  }
+});
 
 /* modal */
 const authModal = document.getElementById('authModal');
